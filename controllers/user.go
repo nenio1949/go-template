@@ -8,6 +8,7 @@ import (
 
 	"go-template/utils"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -117,4 +118,14 @@ func Login(c *gin.Context) {
 		return
 	}
 	common.Success(c, map[string]interface{}{"user": user, "token": token})
+}
+
+// 登出
+func Logout(c *gin.Context) {
+	err := service.JoinBlackList(c.Keys["token"].(*jwt.Token))
+	if err != nil {
+		common.BusinessFail(c, "登出失败")
+		return
+	}
+	common.Success(c, true)
 }
