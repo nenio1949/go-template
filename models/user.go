@@ -2,6 +2,7 @@ package models
 
 import (
 	"go-template/common"
+	"go-template/utils"
 
 	"github.com/jinzhu/gorm"
 )
@@ -11,7 +12,7 @@ type User struct {
 	Model
 	Name         string     `json:"name" gorm:"not null;comment:姓名"`
 	Account      string     `json:"account" gorm:"not null;unique;comment:账户"`
-	Password     string     `json:"password" gorm:"not null;comment:密码"`
+	Password     string     `json:"-" gorm:"not null;comment:密码"`
 	NickName     string     `json:"nick_name" gorm:"comment:昵称"`
 	Gender       string     `json:"gender" gorm:"not null;default:'unknow';comment:性别"`
 	Mobile       string     `json:"mobile" gorm:"index;not null;comment:手机号"`
@@ -91,7 +92,7 @@ func AddUser(params common.UserCreateDto) (int, error) {
 	user := User{
 		Name:         params.Name,
 		Account:      params.Account,
-		Password:     params.Password,
+		Password:     utils.MD5(params.Password),
 		NickName:     params.NickName,
 		Gender:       params.Gender,
 		Mobile:       params.Mobile,

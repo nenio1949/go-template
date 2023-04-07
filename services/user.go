@@ -4,6 +4,7 @@ import (
 	"go-template/common"
 	"go-template/global"
 	"go-template/models"
+	"go-template/utils"
 )
 
 // 获取用户列表
@@ -33,7 +34,7 @@ func DeleteUsers(ids []int) (int, error) {
 
 // 登录
 func Login(params common.UserLoginDto) (*models.User, TokenOutPut, error) {
-	user, err := models.GetUserByLogin(params.Account, params.Password)
+	user, err := models.GetUserByLogin(params.Account, utils.MD5(params.Password))
 	if err != nil || user.ID <= 0 {
 		return nil, TokenOutPut{}, err
 	}

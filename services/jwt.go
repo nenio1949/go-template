@@ -59,7 +59,7 @@ func CreateToken(GuardName string, user *models.User) (TokenOutPut, error) {
 
 // 获取黑名单key
 func getBlackListKey(tokenStr string) string {
-	return "jwt_black_list:" + utils.MD5([]byte(tokenStr))
+	return "jwt_black_list:" + utils.MD5(tokenStr)
 }
 
 // JoinBlackList token 加入黑名单
