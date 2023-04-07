@@ -32,7 +32,7 @@ database:
 jwt:
   secret: 3Bde3BGEbYqtqyEUzW3ry8jKFcaPH17fRmTmqE7MDr05Lwj95uruRKrrkb44TJ4s
   jwt_ttl: 43200
-  jwt_blacklist_grace_period: 10
+  jwt_blacklist_grace_period: 1 # 黑名单接口请求宽限时间(秒)
   refresh_grace_period: 1800
 
 redis:

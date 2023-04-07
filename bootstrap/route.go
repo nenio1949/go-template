@@ -14,6 +14,8 @@ import (
 )
 
 func setupRoute() *gin.Engine {
+	// 生产环境
+	// gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 
 	// 使用jwt验证登录
@@ -41,10 +43,12 @@ func RunServer() {
 		Handler: r,
 	}
 
-	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+	err := srv.ListenAndServe()
+	fmt.Println("3333", err)
+	if err != nil && err != http.ErrServerClosed {
 		log.Fatalf("listen: %s\n", err)
 	}
 
 	str := fmt.Sprintf("服务启动成功 %s:%s", global.App.Config.App.AppUrl, global.App.Config.App.Port)
-	println(str)
+	fmt.Println(str)
 }

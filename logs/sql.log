@@ -790,3 +790,972 @@
 
 2023/04/07 16:50:56 /Users/dragonli/Desktop/projects/my/go-template/models/department.go:38
 [0.224ms] [rows:1] SELECT count(*) FROM `department` WHERE deleted = 0
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.159ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.542ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.636ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'role' AND table_type = 'BASE TABLE'
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.111ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.446ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.268ms] [rows:-] SELECT * FROM `role` LIMIT 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.058ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'role' ORDER BY ORDINAL_POSITION
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.086ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.434ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.577ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'role' AND index_name = 'idx_role_deleted'
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.085ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.475ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.738ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'department' AND table_type = 'BASE TABLE'
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.086ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.408ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.226ms] [rows:-] SELECT * FROM `department` LIMIT 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.894ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'department' ORDER BY ORDINAL_POSITION
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.093ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.422ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.679ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'department' AND index_name = 'idx_department_deleted'
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.080ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.393ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.679ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'user' AND table_type = 'BASE TABLE'
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.096ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.494ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.240ms] [rows:-] SELECT * FROM `user` LIMIT 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.622ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'user' ORDER BY ORDINAL_POSITION
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.083ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.418ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.260ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_role'
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.073ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.374ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.611ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_department'
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.081ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.928ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.681ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_deleted'
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.084ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.398ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 16:58:46 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.615ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_mobile'
+
+2023/04/07 16:58:52 /Users/dragonli/Desktop/projects/my/go-template/models/user.go:150 record not found
+[1.557ms] [rows:0] SELECT * FROM `user` WHERE `user`.`account` = 'admin' AND `user`.`password` = '14e1b600b1fd579f47433b88e8d85291' ORDER BY `user`.`id` LIMIT 1
+
+2023/04/07 16:59:08 /Users/dragonli/Desktop/projects/my/go-template/models/user.go:150
+[0.358ms] [rows:1] SELECT * FROM `department` WHERE `department`.`id` = 2
+
+2023/04/07 16:59:08 /Users/dragonli/Desktop/projects/my/go-template/models/user.go:150
+[0.307ms] [rows:1] SELECT * FROM `role` WHERE `role`.`id` = 1
+
+2023/04/07 16:59:08 /Users/dragonli/Desktop/projects/my/go-template/models/user.go:150
+[1.536ms] [rows:1] SELECT * FROM `user` WHERE `user`.`account` = 'admin' AND `user`.`password` = 'e10adc3949ba59abbe56e057f20f883e' ORDER BY `user`.`id` LIMIT 1
+
+2023/04/07 16:59:15 /Users/dragonli/Desktop/projects/my/go-template/models/department.go:34
+[0.480ms] [rows:3] SELECT * FROM `department` WHERE deleted = 0 ORDER BY id DESC
+
+2023/04/07 16:59:15 /Users/dragonli/Desktop/projects/my/go-template/models/department.go:38
+[0.252ms] [rows:1] SELECT count(*) FROM `department` WHERE deleted = 0
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.139ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[3.575ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[4.789ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'role' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.165ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.358ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.293ms] [rows:-] SELECT * FROM `role` LIMIT 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.794ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'role' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.130ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.528ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[2.249ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'role' AND index_name = 'idx_role_deleted'
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.140ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.529ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.776ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'department' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.134ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.457ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.252ms] [rows:-] SELECT * FROM `department` LIMIT 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.975ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'department' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.133ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.620ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.903ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'department' AND index_name = 'idx_department_deleted'
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.135ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.131ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.760ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'user' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.103ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.451ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.241ms] [rows:-] SELECT * FROM `user` LIMIT 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.982ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'user' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.096ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.415ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.711ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_department'
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.118ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.149ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.662ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_role'
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.102ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.415ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.667ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_deleted'
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.083ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.378ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:07:57 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.653ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_mobile'
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.149ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[4.009ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[5.519ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'role' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.192ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.630ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.293ms] [rows:-] SELECT * FROM `role` LIMIT 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[2.448ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'role' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.119ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.510ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[3.312ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'role' AND index_name = 'idx_role_deleted'
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.090ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.503ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.771ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'department' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.157ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.488ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.274ms] [rows:-] SELECT * FROM `department` LIMIT 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.954ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'department' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.140ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.552ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.400ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'department' AND index_name = 'idx_department_deleted'
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.115ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.457ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.313ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'user' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.098ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.456ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.271ms] [rows:-] SELECT * FROM `user` LIMIT 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.998ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'user' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.083ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.485ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[2.231ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_role'
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.116ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.492ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.225ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_department'
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.098ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.468ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.710ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_deleted'
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.098ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.446ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:10:33 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.799ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_mobile'
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.142ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[3.051ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.147ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'role' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.161ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.581ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.283ms] [rows:-] SELECT * FROM `role` LIMIT 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.807ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'role' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.120ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.281ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[3.351ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'role' AND index_name = 'idx_role_deleted'
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.160ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.542ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.818ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'department' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.094ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.479ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.232ms] [rows:-] SELECT * FROM `department` LIMIT 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.853ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'department' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.092ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.479ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.669ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'department' AND index_name = 'idx_department_deleted'
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.093ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.995ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.689ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'user' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.102ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.116ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.224ms] [rows:-] SELECT * FROM `user` LIMIT 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.001ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'user' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.119ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.090ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.340ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_role'
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.094ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.060ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.684ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_department'
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.170ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.403ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.920ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_deleted'
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.103ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.491ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:20:30 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.713ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_mobile'
+
+2023/04/07 17:20:48 /Users/dragonli/Desktop/projects/my/go-template/models/user.go:150
+[0.327ms] [rows:1] SELECT * FROM `department` WHERE `department`.`id` = 2
+
+2023/04/07 17:20:48 /Users/dragonli/Desktop/projects/my/go-template/models/user.go:150
+[0.971ms] [rows:1] SELECT * FROM `role` WHERE `role`.`id` = 1
+
+2023/04/07 17:20:48 /Users/dragonli/Desktop/projects/my/go-template/models/user.go:150
+[2.140ms] [rows:1] SELECT * FROM `user` WHERE `user`.`account` = 'admin' AND `user`.`password` = 'e10adc3949ba59abbe56e057f20f883e' ORDER BY `user`.`id` LIMIT 1
+
+2023/04/07 17:20:52 /Users/dragonli/Desktop/projects/my/go-template/models/department.go:34
+[0.454ms] [rows:3] SELECT * FROM `department` WHERE deleted = 0 ORDER BY id DESC
+
+2023/04/07 17:20:52 /Users/dragonli/Desktop/projects/my/go-template/models/department.go:38
+[0.221ms] [rows:1] SELECT count(*) FROM `department` WHERE deleted = 0
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.173ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.037ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.055ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'role' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.142ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.525ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.242ms] [rows:-] SELECT * FROM `role` LIMIT 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.062ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'role' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.107ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.519ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.943ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'role' AND index_name = 'idx_role_deleted'
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.121ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.568ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.818ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'department' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.139ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.535ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.242ms] [rows:-] SELECT * FROM `department` LIMIT 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.665ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'department' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.157ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.580ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.826ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'department' AND index_name = 'idx_department_deleted'
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.110ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.452ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.685ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'user' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.100ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.434ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.216ms] [rows:-] SELECT * FROM `user` LIMIT 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.927ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'user' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.103ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.174ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.924ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_role'
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.160ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.648ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.700ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_department'
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.118ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.318ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.827ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_deleted'
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.086ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.592ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:22:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.806ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_mobile'
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.187ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.406ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.180ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'role' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.183ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[2.067ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.318ms] [rows:-] SELECT * FROM `role` LIMIT 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.678ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'role' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.118ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.022ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.835ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'role' AND index_name = 'idx_role_deleted'
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.125ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.157ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.872ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'department' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.124ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.118ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.194ms] [rows:-] SELECT * FROM `department` LIMIT 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.908ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'department' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.100ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.140ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.717ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'department' AND index_name = 'idx_department_deleted'
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.215ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.500ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.841ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'user' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.116ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.555ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.183ms] [rows:-] SELECT * FROM `user` LIMIT 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.921ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'user' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.103ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.450ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.725ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_role'
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.103ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.394ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.598ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_department'
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.089ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.423ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.660ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_deleted'
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.081ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.411ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:24:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.652ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_mobile'
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.185ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.018ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.165ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'role' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.141ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.605ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.305ms] [rows:-] SELECT * FROM `role` LIMIT 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.155ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'role' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.141ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.510ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.890ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'role' AND index_name = 'idx_role_deleted'
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.081ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.481ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.702ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'department' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.104ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.408ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.228ms] [rows:-] SELECT * FROM `department` LIMIT 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.869ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'department' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.089ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.435ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[2.122ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'department' AND index_name = 'idx_department_deleted'
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.102ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.546ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.830ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'user' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.100ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.407ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.190ms] [rows:-] SELECT * FROM `user` LIMIT 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.590ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'user' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.076ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.587ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.938ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_role'
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.180ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.681ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.720ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_department'
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.097ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.447ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.335ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_deleted'
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.117ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.435ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:30:36 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.266ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_mobile'
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.167ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.776ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.098ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'role' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.174ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.601ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.209ms] [rows:-] SELECT * FROM `role` LIMIT 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.986ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'role' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.149ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.081ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.820ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'role' AND index_name = 'idx_role_deleted'
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.122ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.469ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.728ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'department' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.103ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.454ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.162ms] [rows:-] SELECT * FROM `department` LIMIT 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.818ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'department' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.091ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.175ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.820ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'department' AND index_name = 'idx_department_deleted'
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.159ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.713ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.061ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'go-template' AND table_name = 'user' AND table_type = 'BASE TABLE'
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.137ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.588ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.194ms] [rows:-] SELECT * FROM `user` LIMIT 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.031ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale FROM information_schema.columns WHERE table_schema = 'go-template' AND table_name = 'user' ORDER BY ORDINAL_POSITION
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.118ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[1.140ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.678ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_department'
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.110ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.438ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.590ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'go-template' AND table_name = 'user' AND constraint_name = 'fk_user_role'
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.078ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.433ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.634ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_deleted'
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.079ms] [rows:-] SELECT DATABASE()
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.497ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'go-template%' ORDER BY SCHEMA_NAME='go-template' DESC,SCHEMA_NAME limit 1
+
+2023/04/07 17:32:10 /Users/dragonli/Desktop/projects/my/go-template/models/common.go:157
+[0.625ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'go-template' AND table_name = 'user' AND index_name = 'idx_user_mobile'

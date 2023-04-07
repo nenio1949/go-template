@@ -79,8 +79,8 @@ func UpdateDepartment(c *gin.Context) {
 
 // 删除部门
 func DeleteDepartments(c *gin.Context) {
-	ids := c.Query("ids")
-	if ids == "" {
+	ids := c.Param("ids")
+	if len(ids) == 0 {
 		common.BusinessFail(c, "参数非法")
 	}
 
