@@ -1,8 +1,8 @@
 package service
 
 import (
-	"fmt"
 	"go-template/common"
+	"go-template/global"
 	"go-template/models"
 )
 
@@ -18,8 +18,6 @@ func GetUser(id int) (*models.User, error) {
 
 // 新增用户
 func AddUser(params common.UserCreateDto) (int, error) {
-	fmt.Printf("sssddd=%+v\n", params)
-
 	return models.AddUser(params)
 }
 
@@ -31,4 +29,18 @@ func UpdateUser(id int, params common.UserUpdateDto) (bool, error) {
 // 删除用户
 func DeleteUsers(ids []int) (int, error) {
 	return models.DeleteUsers(ids)
+}
+
+// 登录
+func Login(params common.UserLoginDto) (*models.User, TokenOutPut, error) {
+	user, err := models.GetUserByLogin(params.Account, params.Password)
+	if err != nil || user.ID <= 0 {
+		return nil, TokenOutPut{}, err
+	}
+
+	tokenData, err := CreateToken(global.AppGuardName, user)
+	if err != nil {
+		return nil, tokenData, err
+	}
+	return user, tokenData, nil
 }

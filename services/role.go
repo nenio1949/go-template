@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"go-template/common"
 	"go-template/models"
 )
@@ -18,8 +17,6 @@ func GetRole(id int) (*models.Role, error) {
 
 // 新增角色
 func AddRole(params common.RoleCreateDto) (int, error) {
-	fmt.Printf("sssddd=%+v\n", params)
-
 	return models.AddRole(params)
 }
 

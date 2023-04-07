@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"go-template/common"
 	service "go-template/services"
 	"strconv"
@@ -77,7 +76,6 @@ func UpdateUser(c *gin.Context) {
 		common.ValidateFail(c, common.GetErrorMsg(form, err))
 		return
 	}
-	fmt.Printf("sssddd=%+v\n", form)
 
 	number, err := service.UpdateUser(id, form)
 	if err != nil {
@@ -102,4 +100,21 @@ func DeleteUsers(c *gin.Context) {
 		return
 	}
 	common.Success(c, number)
+}
+
+// 登录
+func Login(c *gin.Context) {
+	var form common.UserLoginDto
+
+	if err := c.ShouldBindJSON(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
+	user, token, err := service.Login(form)
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	common.Success(c, map[string]interface{}{"user": user, "token": token})
 }

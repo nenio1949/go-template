@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"go-template/middleware"
 	server "go-template/routes"
 
 	"github.com/gin-contrib/cors"
@@ -16,7 +17,7 @@ func setupRoute() *gin.Engine {
 	router := gin.Default()
 
 	// 使用jwt验证登录
-	// router.Use(middleware.JWTAuth(global.AppGuardName))
+	router.Use(middleware.JWTAuth(global.AppGuardName))
 
 	// 注册 api 分组路由
 	apiGroup := router.Group("/api")
@@ -25,6 +26,7 @@ func setupRoute() *gin.Engine {
 	})
 	router.Static("/static", "./server/templates")
 	router.Use(cors.Default())
+	server.SetApiAuthRoutes(apiGroup)
 	server.SetApiUserRoutes(apiGroup)
 	server.SetApiRoleRoutes(apiGroup)
 	server.SetApiDepartmentRoutes(apiGroup)

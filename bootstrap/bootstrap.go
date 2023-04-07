@@ -16,5 +16,8 @@ func Init() {
 	// 初始化数据库
 	global.App.DB = models.InitializeDB()
 
+	// 初始化Redis
+	global.App.Redis = InitializeRedis()
+
 	RunServer()
 }

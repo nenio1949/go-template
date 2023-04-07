@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"go-template/common"
 	"go-template/models"
 )
@@ -18,8 +17,6 @@ func GetDepartment(id int) (*models.Department, error) {
 
 // 新增部门
 func AddDepartment(params common.DepartmentCreateDto) (int, error) {
-	fmt.Printf("sssddd=%+v\n", params)
-
 	return models.AddDepartment(params)
 }
 

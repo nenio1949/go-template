@@ -71,6 +71,11 @@ func AddDepartment(params common.DepartmentCreateDto) (int, error) {
 
 // 更新指定部门
 func UpdateDepartment(id int, params common.DepartmentUpdateDto) (bool, error) {
+	if hasDepartment, hasErr := GetDepartment(id); hasErr != nil {
+		_ = hasDepartment
+		return false, hasErr
+	}
+
 	department := Department{
 		Name:     params.Name,
 		ParentID: params.ParentID,

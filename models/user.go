@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"go-template/common"
 
 	"github.com/jinzhu/gorm"
@@ -112,7 +111,7 @@ func AddUser(params common.UserCreateDto) (int, error) {
 func UpdateUser(id int, params common.UserUpdateDto) (bool, error) {
 
 	if hasUser, hasErr := GetUser(id); hasErr != nil {
-		fmt.Printf("sssddd=%+v\n", hasUser)
+		_ = hasUser
 		return false, hasErr
 	}
 
@@ -142,4 +141,15 @@ func DeleteUsers(ids []int) (int, error) {
 	}
 
 	return int(db.RowsAffected), nil
+}
+
+// 根据账号密码获取用户
+func GetUserByLogin(account, password string) (*User, error) {
+	var user User
+	err := db.Preload("Role").Preload("Department").Where(User{Account: account, Password: password}).First(&user).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+
+	return &user, nil
 }

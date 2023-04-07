@@ -48,3 +48,9 @@ type UserUpdateDto struct {
 	RoleID       int    `form:"role_id" json:"role_id,omitempty" `
 	DepartmentID int    `form:"department_id" json:"department_id,omitempty" `
 }
+
+// 用户登录dto
+type UserLoginDto struct {
+	Account  string `form:"account" json:"account" binding:"required"`
+	Password string `form:"password" json:"password" binding:"required"`
+}
