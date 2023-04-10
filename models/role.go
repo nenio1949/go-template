@@ -89,7 +89,7 @@ func UpdateRole(id int, params common.RoleUpdateDto) (bool, error) {
 
 // 删除角色
 func DeleteRoles(ids []int) (int, error) {
-	if err := db.Where("id IN (?)", ids).Update("deleted", 1).Error; err != nil {
+	if err := db.Model(&Role{}).Where("id IN (?)", ids).Update("deleted", 1).Error; err != nil {
 		return 0, err
 	}
 

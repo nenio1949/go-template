@@ -1,8 +1,6 @@
 package models
 
 import (
-	"encoding/json"
-	"fmt"
 	"go-template/common"
 
 	"gorm.io/gorm"
@@ -91,9 +89,7 @@ func UpdateDepartment(id int, params common.DepartmentUpdateDto) (bool, error) {
 
 // 删除部门
 func DeleteDepartments(ids []int) (int, error) {
-	fmt.Println("333", ids)
-	json.Marshal(ids)
-	r := db.Where("id IN (?)", ids).Updates(map[string]interface{}{"deleted": 1})
+	r := db.Model(&Department{}).Where("id IN (?)", ids).Updates(map[string]interface{}{"deleted": 1})
 	if r.Error != nil {
 		return 0, r.Error
 	}

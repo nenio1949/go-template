@@ -137,7 +137,7 @@ func UpdateUser(id int, params common.UserUpdateDto) (bool, error) {
 
 // 删除用户
 func DeleteUsers(ids []int) (int, error) {
-	if err := db.Where("id IN (?)", ids).Update("deleted", 1).Error; err != nil {
+	if err := db.Model(&User{}).Where("id IN (?)", ids).Update("deleted", 1).Error; err != nil {
 		return 0, err
 	}
 

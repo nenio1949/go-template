@@ -24,4 +24,6 @@
 
 # custom
 .history/
-logs/
+logs/*
+logs/sql.log
+logs/system.log
