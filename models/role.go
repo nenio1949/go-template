@@ -66,7 +66,7 @@ func AddRole(params common.RoleCreateDto) (int, error) {
 		return 0, err
 	}
 
-	return role.Model.ID, nil
+	return role.ID, nil
 }
 
 // 更新指定角色

@@ -12,7 +12,7 @@ func SetApiDepartmentRoutes(router *gin.RouterGroup) {
 	departmentRouter.GET("/", departmentController.GetDepartments)           // 获取部门列表
 	departmentRouter.GET("/:id", departmentController.GetDepartment)         // 获取指定部门
 	departmentRouter.POST("/", departmentController.AddDepartment)           // 新增部门
-	departmentRouter.PUT("/:id", departmentController.UpdateDepartment)      //更新指定部门
-	departmentRouter.DELETE("/:ids", departmentController.DeleteDepartments) //删除部门
+	departmentRouter.PUT("/:id", departmentController.UpdateDepartment)      // 更新指定部门
+	departmentRouter.DELETE("/:ids", departmentController.DeleteDepartments) // 删除部门
 
 }

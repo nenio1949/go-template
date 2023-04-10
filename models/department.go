@@ -66,7 +66,7 @@ func AddDepartment(params common.DepartmentCreateDto) (int, error) {
 		return 0, err
 	}
 
-	return department.Model.ID, nil
+	return department.ID, nil
 }
 
 // 更新指定部门

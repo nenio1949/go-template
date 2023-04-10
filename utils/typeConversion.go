@@ -1,6 +1,9 @@
 package utils
 
-import "strconv"
+import (
+	"encoding/json"
+	"strconv"
+)
 
 // 字符数组转int数字
 func StringToInt(strArr []string) []int {
@@ -11,4 +14,9 @@ func StringToInt(strArr []string) []int {
 	}
 
 	return res
+}
+
+func MapToJson(data interface{}) string {
+	byteStr, _ := json.Marshal(data)
+	return string(byteStr)
 }

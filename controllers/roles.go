@@ -15,6 +15,15 @@ import (
 func GetRoles(c *gin.Context) {
 	var form common.PageSearchRoleDto
 
+	form.Page = 1
+	form.Size = 10
+	form.Pagination = true
+
+	if err := c.ShouldBindQuery(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
 	roles, total, err := service.GetRoles(form)
 	if err != nil {
 		common.BusinessFail(c, err.Error())

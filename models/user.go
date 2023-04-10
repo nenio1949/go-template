@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"go-template/common"
 	"go-template/utils"
 
@@ -14,7 +15,7 @@ type User struct {
 	Account      string     `json:"account" gorm:"not null;unique;comment:账户"`
 	Password     string     `json:"-" gorm:"not null;comment:密码"`
 	NickName     string     `json:"nick_name" gorm:"comment:昵称"`
-	Gender       string     `json:"gender" gorm:"not null;default:'unknow';comment:性别"`
+	Gender       string     `json:"gender" gorm:"type:enum;enum('unknow','male','female');not null;default:'unknow';comment:性别"`
 	Mobile       string     `json:"mobile" gorm:"index;not null;comment:手机号"`
 	Email        string     `json:"email" gorm:"comment:邮箱"`
 	Status       string     `json:"status" gorm:"default:'normal';comment:状态"`
@@ -76,6 +77,21 @@ func GetUsers(params common.PageSearchUserDto) ([]*User, int64, error) {
 	return users, total, nil
 }
 
+// 根据ids获取用户列表
+func GetUsersByIds(ids []int) ([]User, error) {
+	if len(ids) == 0 {
+		return nil, errors.New("参数非法")
+	}
+	var users []User
+	var err error
+
+	err = db.Where("deleted = 0 AND id IN (?)", ids).Find(&users).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return users, nil
+}
+
 // 根据id获取用户信息
 func GetUser(id int) (*User, error) {
 	var user User
@@ -105,7 +121,7 @@ func AddUser(params common.UserCreateDto) (int, error) {
 		return 0, err
 	}
 
-	return user.Model.ID, nil
+	return user.ID, nil
 }
 
 // 更新指定用户

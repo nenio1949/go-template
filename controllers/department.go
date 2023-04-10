@@ -15,6 +15,15 @@ import (
 func GetDepartments(c *gin.Context) {
 	var form common.PageSearchDepartmentDto
 
+	form.Page = 1
+	form.Size = 10
+	form.Pagination = true
+
+	if err := c.ShouldBindQuery(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
 	departments, total, err := service.GetDepartments(form)
 	if err != nil {
 		common.BusinessFail(c, err.Error())
