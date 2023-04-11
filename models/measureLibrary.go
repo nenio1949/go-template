@@ -1,6 +1,10 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"go-template/common"
+
+	"gorm.io/gorm"
+)
 
 // 安全措施库model
 type MeasureLibrary struct {
@@ -17,7 +21,7 @@ func GetMeasureLibrarysByIds(ids []int) ([]MeasureLibrary, error) {
 	var measureLibraries []MeasureLibrary
 	var err error
 	tx := db.Where("deleted = 0")
-	tx.Where("contruction_id IN (?)", ids)
+	tx.Where("construction_id IN (?)", ids)
 	tx.Order("id DESC")
 
 	tx.Find(&measureLibraries)
@@ -27,4 +31,21 @@ func GetMeasureLibrarysByIds(ids []int) ([]MeasureLibrary, error) {
 	}
 
 	return measureLibraries, nil
+}
+
+// 新增措施库
+func AddMeasureLibrary(params common.MeasureLibraryCreateDto) (int, error) {
+	measureLibrary := MeasureLibrary{
+		HomeWork: params.HomeWork,
+		RiskType: params.RiskType,
+		Name:     params.Name,
+		Risk:     params.Risk,
+		Measures: params.Measures,
+	}
+
+	if err := db.Create(&measureLibrary).Error; err != nil {
+		return 0, err
+	}
+
+	return measureLibrary.ID, nil
 }

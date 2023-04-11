@@ -15,7 +15,7 @@ type User struct {
 	Account      string     `json:"account" gorm:"not null;unique;comment:账户"`
 	Password     string     `json:"-" gorm:"not null;comment:密码"`
 	NickName     string     `json:"nick_name" gorm:"comment:昵称"`
-	Gender       string     `json:"gender" gorm:"type:enum;enum('unknow','male','female');not null;default:'unknow';comment:性别"`
+	Gender       string     `json:"gender" gorm:"not null;default:'unknow';comment:性别"`
 	Mobile       string     `json:"mobile" gorm:"index;not null;comment:手机号"`
 	Email        string     `json:"email" gorm:"comment:邮箱"`
 	Status       string     `json:"status" gorm:"default:'normal';comment:状态"`
@@ -23,6 +23,7 @@ type User struct {
 	RoleID       int        `json:"role_id" gorm:"comment:角色id;==default:'galeone'=="`
 	Department   Department `json:"department"`
 	DepartmentID int        `json:"department_id" gorm:"comment:部门id;==default:'galeone'=="`
+	Projects     []Project  `json:"projects" gorm:"many2many:user_project;"`
 }
 
 // 获取用户列表
@@ -83,9 +84,8 @@ func GetUsersByIds(ids []int) ([]User, error) {
 		return nil, errors.New("参数非法")
 	}
 	var users []User
-	var err error
 
-	err = db.Where("deleted = 0 AND id IN (?)", ids).Find(&users).Error
+	err := db.Where("deleted = 0 AND id IN (?)", ids).Find(&users).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, err
 	}

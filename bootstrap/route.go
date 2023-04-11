@@ -29,9 +29,12 @@ func setupRoute() *gin.Engine {
 	router.Static("/static", "./server/templates")
 	router.Use(cors.Default())
 	server.SetApiAuthRoutes(apiGroup)
+	server.SetApiProjectRoutes(apiGroup)
 	server.SetApiUserRoutes(apiGroup)
 	server.SetApiRoleRoutes(apiGroup)
 	server.SetApiDepartmentRoutes(apiGroup)
+	server.SetApiMeasureLibraryRoutes(apiGroup)
+	server.SetApiConstructionRoutes(apiGroup)
 	return router
 }
 

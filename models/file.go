@@ -21,7 +21,7 @@ func GetFiles(constructionId int) ([]*File, int64, error) {
 	var err error
 	tx := db.Where("deleted = 0")
 	if constructionId > 0 {
-		tx.Where("contruction_id = ?", constructionId)
+		tx.Where("construction_id = ?", constructionId)
 	}
 	tx.Order("id DESC")
 
