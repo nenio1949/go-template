@@ -23,6 +23,7 @@ type UserCreateDto struct {
 	Email        string `form:"email" josn:"email"`
 	RoleID       int    `form:"role_id" json:"role_id" validate:"gt=0"`
 	DepartmentID int    `form:"department_id" json:"department_id" validate:"gt=0"`
+	ProjectIds   []int  `form:"project_ids" json:"project_ids"`
 }
 
 func (params UserCreateDto) GetMessages() ValidatorMessages {
@@ -47,6 +48,7 @@ type UserUpdateDto struct {
 	Status       string `form:"status" json:"status,omitempty" `
 	RoleID       int    `form:"role_id" json:"role_id,omitempty" `
 	DepartmentID int    `form:"department_id" json:"department_id,omitempty" `
+	ProjectIds   []int  `form:"project_ids" json:"project_ids,omitempty"`
 }
 
 // 用户登录dto

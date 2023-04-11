@@ -25,7 +25,7 @@ type Model struct {
 	ID        int       `json:"id" gorm:"primaryKey;comment:主键"`
 	CreatedAt LocalTime `json:"created_at" gorm:"autoCreateTime:milli;comment:创建时间"`
 	UpdatedAt LocalTime `json:"updated_at" gorm:"autoUpdateTime:milli;comment:更新时间"`
-	Deleted   int       `json:"deleted" gorm:"index;default:0;comment:是否逻辑删除"`
+	Deleted   bool      `json:"deleted" gorm:"index;default:false;comment:是否逻辑删除"`
 }
 
 /*****************时间格式化***************/

@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"go-template/common"
 	"go-template/utils"
 
@@ -105,6 +106,7 @@ func GetUser(id int) (*User, error) {
 
 // 新增用户
 func AddUser(params common.UserCreateDto) (int, error) {
+	projects, _ := GetProjectsByIds(params.ProjectIds)
 	user := User{
 		Name:         params.Name,
 		Account:      params.Account,
@@ -115,6 +117,7 @@ func AddUser(params common.UserCreateDto) (int, error) {
 		Email:        params.Email,
 		RoleID:       params.RoleID,
 		DepartmentID: params.DepartmentID,
+		Projects:     projects,
 	}
 
 	if err := db.Create(&user).Error; err != nil {
@@ -126,12 +129,14 @@ func AddUser(params common.UserCreateDto) (int, error) {
 
 // 更新指定用户
 func UpdateUser(id int, params common.UserUpdateDto) (bool, error) {
+	var oldUser *User
+	var err error
 
-	if hasUser, hasErr := GetUser(id); hasErr != nil {
-		_ = hasUser
-		return false, hasErr
+	if oldUser, err = GetUser(id); err != nil {
+		return false, err
 	}
 
+	projects, _ := GetProjectsByIds(params.ProjectIds)
 	user := User{
 		Name:         params.Name,
 		Account:      params.Account,
@@ -143,8 +148,10 @@ func UpdateUser(id int, params common.UserUpdateDto) (bool, error) {
 		Status:       params.Status,
 		RoleID:       params.RoleID,
 		DepartmentID: params.DepartmentID,
+		Projects:     projects,
 	}
-	if r := db.Model(&User{}).Where("id = ? AND deleted = ? ", id, 0).Updates(user); r.RowsAffected != 1 {
+	if r := db.Model(&oldUser).Updates(user); r.RowsAffected != 1 {
+		fmt.Printf("ssss,%s", r.Error)
 		return false, r.Error
 	}
 

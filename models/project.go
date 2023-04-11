@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"go-template/common"
 
 	"gorm.io/gorm"
@@ -10,7 +11,7 @@ import (
 type Project struct {
 	Model
 	Name   string `json:"content" gorm:"not null;comment:项目名称"`
-	Number string `json:"number" gorm:"not null;comment:项目内容"`
+	Number string `json:"number" gorm:"not null;comment:项目代号"`
 	PinYin string `json:"pin_yin" gorm:"not null;comment:拼音"`
 	Region string `json:"region" gorm:"not null;comment:所属区域"`
 	Active bool   `json:"active" gorm:"not null;default:true;comment:是否激活"`
@@ -45,6 +46,20 @@ func GetProjects(params common.PageSearchProjectDto) ([]*Project, int64, error) 
 	}
 
 	return projects, total, nil
+}
+
+// 根据ids获取项目列表
+func GetProjectsByIds(ids []int) ([]Project, error) {
+	if len(ids) == 0 {
+		return nil, errors.New("参数非法")
+	}
+	var projects []Project
+
+	err := db.Where("deleted = 0 AND id IN (?)", ids).Find(&projects).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return projects, nil
 }
 
 // 根据id获取项目信息

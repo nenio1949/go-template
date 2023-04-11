@@ -47,11 +47,9 @@ func RunServer() {
 	}
 
 	err := srv.ListenAndServe()
-	fmt.Println("3333", err)
 	if err != nil && err != http.ErrServerClosed {
 		log.Fatalf("listen: %s\n", err)
 	}
 
-	str := fmt.Sprintf("服务启动成功 %s:%s", global.App.Config.App.AppUrl, global.App.Config.App.Port)
-	fmt.Println(str)
+	fmt.Printf("服务启动成功 %s", global.App.Config.App.AppUrl+":"+global.App.Config.App.Port)
 }
