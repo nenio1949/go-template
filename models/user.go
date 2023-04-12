@@ -2,11 +2,11 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"go-template/common"
 	"go-template/utils"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
+	// "github.com/jinzhu/gorm"
 )
 
 // 用户model
@@ -55,7 +55,7 @@ func GetUsers(params common.PageSearchUserDto) ([]*User, int64, error) {
 	if params.DepartmentID > 0 {
 		tx.Where("department_id = ?", params.DepartmentID)
 	}
-	tx.Preload("Role").Preload("Department")
+	tx.Preload("Role").Preload("Department").Preload("Projects")
 
 	if len(params.Order) > 0 {
 		tx.Order(params.Order)
@@ -96,7 +96,7 @@ func GetUsersByIds(ids []int) ([]User, error) {
 // 根据id获取用户信息
 func GetUser(id int) (*User, error) {
 	var user User
-	err := db.Preload("Role").Preload("Department").Where("id = ? AND deleted = ? ", id, 0).First(&user).Error
+	err := db.Preload("Role").Preload("Department").Preload("Projects").Where("id = ? AND deleted = ? ", id, 0).First(&user).Error
 	if err != nil {
 		return nil, err
 	}
@@ -132,26 +132,23 @@ func UpdateUser(id int, params common.UserUpdateDto) (bool, error) {
 	var oldUser *User
 	var err error
 
-	if oldUser, err = GetUser(id); err != nil {
+	if oldUser, err = GetUser(id); err != nil || oldUser == nil {
 		return false, err
 	}
 
 	projects, _ := GetProjectsByIds(params.ProjectIds)
-	user := User{
-		Name:         params.Name,
-		Account:      params.Account,
-		Password:     params.Password,
-		NickName:     params.NickName,
-		Gender:       params.Gender,
-		Mobile:       params.Mobile,
-		Email:        params.Email,
-		Status:       params.Status,
-		RoleID:       params.RoleID,
-		DepartmentID: params.DepartmentID,
-		Projects:     projects,
-	}
-	if r := db.Model(&oldUser).Updates(user); r.RowsAffected != 1 {
-		fmt.Printf("ssss,%s", r.Error)
+	oldUser.Name = params.Name
+	oldUser.Account = params.Account
+	oldUser.Password = params.Password
+	oldUser.NickName = params.NickName
+	oldUser.Gender = params.Gender
+	oldUser.Mobile = params.Mobile
+	oldUser.Email = params.Email
+	oldUser.Status = params.Status
+	oldUser.RoleID = params.RoleID
+	oldUser.DepartmentID = params.DepartmentID
+	oldUser.Projects = projects
+	if r := db.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&oldUser); r.RowsAffected != 1 {
 		return false, r.Error
 	}
 

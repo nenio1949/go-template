@@ -73,16 +73,15 @@ func AddDepartment(params common.DepartmentCreateDto) (int, error) {
 
 // 更新指定部门
 func UpdateDepartment(id int, params common.DepartmentUpdateDto) (bool, error) {
-	if hasDepartment, hasErr := GetDepartment(id); hasErr != nil {
-		_ = hasDepartment
-		return false, hasErr
+	var oldDepartment *Department
+	var err error
+	if oldDepartment, err = GetDepartment(id); err != nil || oldDepartment == nil {
+		return false, err
 	}
 
-	department := Department{
-		Name:     params.Name,
-		ParentID: params.ParentID,
-	}
-	if r := db.Model(&Department{}).Where("id = ? AND deleted = ? ", id, 0).Updates(department); r.RowsAffected != 1 {
+	oldDepartment.Name = params.Name
+	oldDepartment.ParentID = params.ParentID
+	if r := db.Updates(&oldDepartment); r.RowsAffected != 1 {
 		return false, r.Error
 	}
 

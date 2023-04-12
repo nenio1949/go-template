@@ -91,19 +91,18 @@ func AddProject(params common.ProjectCreateDto) (int, error) {
 
 // 更新指定项目
 func UpdateProject(id int, params common.ProjectUpdateDto) (bool, error) {
-	if hasProject, hasErr := GetProject(id); hasErr != nil {
-		_ = hasProject
-		return false, hasErr
+	var oldProject *Project
+	var err error
+	if oldProject, err = GetProject(id); err != nil || oldProject == nil {
+		return false, err
 	}
 
-	project := Project{
-		Name:   params.Name,
-		Number: params.Number,
-		PinYin: params.PinYin,
-		Region: params.Region,
-		Active: params.Active,
-	}
-	if r := db.Model(&Project{}).Where("id = ? AND deleted = ? ", id, 0).Updates(project); r.RowsAffected != 1 {
+	oldProject.Name = params.Name
+	oldProject.Number = params.Number
+	oldProject.PinYin = params.PinYin
+	oldProject.Region = params.Region
+	oldProject.Active = params.Active
+	if r := db.Updates(&oldProject); r.RowsAffected != 1 {
 		return false, r.Error
 	}
 

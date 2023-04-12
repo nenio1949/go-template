@@ -71,16 +71,15 @@ func AddRole(params common.RoleCreateDto) (int, error) {
 
 // 更新指定角色
 func UpdateRole(id int, params common.RoleUpdateDto) (bool, error) {
-	if hasRole, hasErr := GetRole(id); hasErr != nil {
-		_ = hasRole
-		return false, hasErr
+	var oldRole *Role
+	var err error
+	if oldRole, err = GetRole(id); err != nil || oldRole == nil {
+		return false, err
 	}
 
-	role := Role{
-		Name:       params.Name,
-		Permission: params.Permission,
-	}
-	if r := db.Model(&Role{}).Where("id = ? AND deleted = ? ", id, 0).Updates(role); r.RowsAffected != 1 {
+	oldRole.Name = params.Name
+	oldRole.Permission = params.Permission
+	if r := db.Updates(&oldRole); r.RowsAffected != 1 {
 		return false, r.Error
 	}
 

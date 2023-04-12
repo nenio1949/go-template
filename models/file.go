@@ -17,7 +17,7 @@ type File struct {
 	Name           string       `json:"name" gorm:"not null;comment:文件名称"`
 	Url            string       `json:"url" gorm:"not null;comment:文件路径"`
 	Construction   Construction `json:"construction"`
-	ConstructionID int          `json:"construction_id" gorm:"not null;comment:"`
+	ConstructionID int          `json:"construction_id" gorm:"not null;comment:施工作业id"`
 }
 
 // 获取文件列表

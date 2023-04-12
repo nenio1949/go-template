@@ -38,7 +38,7 @@ type ConstructionUpdateDto struct {
 	Restrictions      string             `form:"restrictions" json:"restrictions,omitempty"`
 	Matter            string             `form:"matter" json:"matter,omitempty"`
 	IsRisk            bool               `form:"is_risk" json:"is_risk,omitempty"`
-	TemporaryUser     []TemporaryUserDto `form:"temporary_user" json:"temporary_user,omitempty"`
+	TemporaryUsers    []TemporaryUserDto `form:"temporary_users" json:"temporary_users,omitempty"`
 
 	// 安全交底
 	Explain    string `form:"explain" json:"explain,omitempty"`

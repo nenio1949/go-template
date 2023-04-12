@@ -20,7 +20,7 @@ import (
 
 var db *gorm.DB
 
-// 自增ID主键
+// 公共字段
 type Model struct {
 	ID        int       `json:"id" gorm:"primaryKey;comment:主键"`
 	CreatedAt LocalTime `json:"created_at" gorm:"autoCreateTime:milli;comment:创建时间"`
@@ -162,6 +162,7 @@ func initMySqlTables(db *gorm.DB) {
 		Construction{},
 		TemporaryUser{},
 		MeasureLibrary{},
+		File{},
 	)
 	if err != nil {
 		global.App.Log.Error("migrate table failed", zap.Any("err", err))

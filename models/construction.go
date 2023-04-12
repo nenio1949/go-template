@@ -121,6 +121,7 @@ func GetConstruction(id int) (*Construction, error) {
 
 // 新增施工作业
 func AddConstruction(params common.ConstructionCreateDto) (int, error) {
+
 	startTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.StartTtime, time.Local)
 	endTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.EndTime, time.Local)
 	measureLibraries, _ := GetMeasureLibrarysByIds(params.MeasureIds)
@@ -148,6 +149,14 @@ func AddConstruction(params common.ConstructionCreateDto) (int, error) {
 
 // 更新施工作业
 func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, error) {
+	var oldConstruction *Construction
+	var temporaryUsers []TemporaryUser
+	var err error
+
+	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
+		return false, err
+	}
+
 	startTime, _ := time.ParseInLocation("20060102150405", params.StartTtime, time.Local)
 	endTime, _ := time.ParseInLocation("20060102150405", params.EndTime, time.Local)
 	measureLibraries, _ := GetMeasureLibrarysByIds(params.MeasureIds)
@@ -157,70 +166,77 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 	quitClockTime, _ := time.ParseInLocation("20060102150405", params.QuitClockTime, time.Local)
 	handoverTime, _ := time.ParseInLocation("20060102150405", params.HandoverTime, time.Local)
 	replayTime, _ := time.ParseInLocation("20060102150405", params.ReplayTime, time.Local)
-	ids, _ := AddOrUpdateTemporaryUsers(id, params.TemporaryUser)
-	temporaryUsers, _ := GetTemporaryUsersByIds(ids)
+	// ids, _ := AddOrUpdateTemporaryUsers(id, params.TemporaryUser)
+	// temporaryUsers, _ := GetTemporaryUsersByIds(ids)
 
-	construction := Construction{
-		StartTime:         LocalTime{Time: startTime},
-		EndTime:           LocalTime{Time: endTime},
-		MeasureLibrarys:   measureLibraries,
-		ExecutiveUsers:    executiveUsers,
-		EquipmentType:     params.EquipmentType,
-		Location:          params.Location,
-		Remark:            params.Remark,
-		ManagerID:         params.ManagerID,
-		EngineerID:        params.EngineerID,
-		LeaderID:          params.LeaderID,
-		RecipientID:       params.RecipientID,
-		PhoneID:           params.PhoneID,
-		TerminationUserID: params.TerminationUserID,
-		StopReason:        params.StopReason,
-		Process:           params.Process,
-		Content:           params.Content,
-		WorkScope:         params.WorkScope,
-		Restrictions:      params.Restrictions,
-		Matter:            params.Matter,
-		IsRisk:            params.IsRisk,
-		TemporaryUsers:    temporaryUsers,
-		Explain:           params.Explain,
-		IsNotice:          params.IsNotice,
-		NoticeTime:        LocalTime{Time: noticeTime},
-		StayTime:          params.StayTime,
-		ToolNum:           params.ToolNum,
-		UserNum:           params.UserNum,
-		ClockTime:         LocalTime{Time: clockTime},
-		ClockUserID:       params.ClockUserID,
-		ToolRemark:        params.ToolRemark,
-		LightRemark:       params.LightRemark,
-		LightType:         params.LightType,
-		GuardRemark:       params.GuardRemark,
-		GuardType:         params.GuardType,
-		NeedJob:           params.NeedJob,
-		ProcessRemark:     params.ProcessRemark,
-		QuitToolNum:       params.QuitToolNum,
-		QuitUserNum:       params.QuitUserNum,
-		QuitToolRemark:    params.QuitToolRemark,
-		QuitUserRemark:    params.QuitUserRemark,
-		QuitClockTime:     LocalTime{Time: quitClockTime},
-		QuitClockLocation: params.QuitClockLocation,
-		QuitClockUserID:   params.QuitClockUserID,
-		HaveHandover:      params.HaveHandover,
-		Handover:          params.Handover,
-		HandoverTime:      LocalTime{Time: handoverTime},
-		HandoverType:      params.HandoverType,
-		ReplayContext:     params.ReplayContext,
-		ReplayTime:        LocalTime{Time: replayTime},
-		SoundRemark:       params.SoundRemark,
-		MobileReceived:    params.MobileReceived,
-		WorkedType:        params.WorkedType,
-		WorkedRemark:      params.WorkedRemark,
-		LogoutJob:         params.LogoutJob,
-		LogoutType:        params.LogoutType,
-		LogoutRemark:      params.LogoutRemark,
-		AuditStatus:       params.AuditStatus,
+	for a := 0; a < len(params.TemporaryUsers); a++ {
+		temporaryUsers = append(temporaryUsers, TemporaryUser{
+			Model:         Model{ID: params.TemporaryUsers[a].ID},
+			Name:          params.TemporaryUsers[a].Name,
+			Department:    params.TemporaryUsers[a].Department,
+			DockingUserID: params.TemporaryUsers[a].DockingUserID,
+		})
 	}
 
-	if r := db.Model(&Construction{}).Where("id = ? AND deleted = ? ", id, 0).Updates(construction); r.RowsAffected != 1 {
+	oldConstruction.StartTime = LocalTime{Time: startTime}
+	oldConstruction.EndTime = LocalTime{Time: endTime}
+	oldConstruction.MeasureLibrarys = measureLibraries
+	oldConstruction.ExecutiveUsers = executiveUsers
+	oldConstruction.EquipmentType = params.EquipmentType
+	oldConstruction.Location = params.Location
+	oldConstruction.Remark = params.Remark
+	oldConstruction.ManagerID = params.ManagerID
+	oldConstruction.EngineerID = params.EngineerID
+	oldConstruction.LeaderID = params.LeaderID
+	oldConstruction.RecipientID = params.RecipientID
+	oldConstruction.PhoneID = params.PhoneID
+	oldConstruction.TerminationUserID = params.TerminationUserID
+	oldConstruction.StopReason = params.StopReason
+	oldConstruction.Process = params.Process
+	oldConstruction.Content = params.Content
+	oldConstruction.WorkScope = params.WorkScope
+	oldConstruction.Restrictions = params.Restrictions
+	oldConstruction.Matter = params.Matter
+	oldConstruction.IsRisk = params.IsRisk
+	oldConstruction.TemporaryUsers = temporaryUsers
+	oldConstruction.Explain = params.Explain
+	oldConstruction.IsNotice = params.IsNotice
+	oldConstruction.NoticeTime = LocalTime{Time: noticeTime}
+	oldConstruction.StayTime = params.StayTime
+	oldConstruction.ToolNum = params.ToolNum
+	oldConstruction.UserNum = params.UserNum
+	oldConstruction.ClockTime = LocalTime{Time: clockTime}
+	oldConstruction.ClockUserID = params.ClockUserID
+	oldConstruction.ToolRemark = params.ToolRemark
+	oldConstruction.LightRemark = params.LightRemark
+	oldConstruction.LightType = params.LightType
+	oldConstruction.GuardRemark = params.GuardRemark
+	oldConstruction.GuardType = params.GuardType
+	oldConstruction.NeedJob = params.NeedJob
+	oldConstruction.ProcessRemark = params.ProcessRemark
+	oldConstruction.QuitToolNum = params.QuitToolNum
+	oldConstruction.QuitUserNum = params.QuitUserNum
+	oldConstruction.QuitToolRemark = params.QuitToolRemark
+	oldConstruction.QuitUserRemark = params.QuitUserRemark
+	oldConstruction.QuitClockTime = LocalTime{Time: quitClockTime}
+	oldConstruction.QuitClockLocation = params.QuitClockLocation
+	oldConstruction.QuitClockUserID = params.QuitClockUserID
+	oldConstruction.HaveHandover = params.HaveHandover
+	oldConstruction.Handover = params.Handover
+	oldConstruction.HandoverTime = LocalTime{Time: handoverTime}
+	oldConstruction.HandoverType = params.HandoverType
+	oldConstruction.ReplayContext = params.ReplayContext
+	oldConstruction.ReplayTime = LocalTime{Time: replayTime}
+	oldConstruction.SoundRemark = params.SoundRemark
+	oldConstruction.MobileReceived = params.MobileReceived
+	oldConstruction.WorkedType = params.WorkedType
+	oldConstruction.WorkedRemark = params.WorkedRemark
+	oldConstruction.LogoutJob = params.LogoutJob
+	oldConstruction.LogoutType = params.LogoutType
+	oldConstruction.LogoutRemark = params.LogoutRemark
+	oldConstruction.AuditStatus = params.AuditStatus
+
+	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
 		return false, r.Error
 	}
 
