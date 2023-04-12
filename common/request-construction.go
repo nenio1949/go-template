@@ -1,29 +1,60 @@
 package common
 
-// 施工作业新增dto
-type ConstructionCreateDto struct {
-	MeasureIds       []int  `form:"measure_ids" json:"measure_ids"`
-	StartTtime       string `form:"start_time" json:"start_time"`
-	EndTime          string `form:"end_time" json:"end_time"`
-	ContinuedDays    int    `form:"continued_days" json:"continued_days"`
-	LeaderID         int    `form:"leader_id" json:"leader_id"`
-	ExecutiveUserIds []int  `form:"executive_user_ids" json:"executive_user_ids"`
-	EquipmentType    string `form:"equipment_type" json:"equipment_type"`
-	Location         string `form:"location" json:"location"`
-	Remark           string `form:"remark" json:"remark"`
+// 施工作业查询dto
+type PageSearchConstructionDto struct {
+	PaginationDto
+	Status string `form:"status" json:"status,omitempty"`
+}
+
+// 施工作业计划dto
+type ConstructionPlanDto struct {
+	ID               int                      `json:"id"`
+	MeasureLibraries []MeasureLibraryDto      `json:"measure_libraries"`
+	StartTtime       string                   `json:"start_time"`
+	EndTime          string                   `json:"end_time"`
+	Leader           map[string]interface{}   `json:"leader"`
+	Location         string                   `json:"location"`
+	Remark           string                   `json:"remark"`
+	Status           string                   `json:"status"`
+	EquipmentType    []string                 `json:"equipment_type"`
+	ExecutiveUsers   []map[string]interface{} `json:"executive_users"`
+}
+
+// 施工作业计划新增dto
+type ConstructionPlanCreateDto struct {
+	MeasureLibraryIds []int    `form:"measure_library_ids" json:"measure_library_ids"`
+	StartTtime        string   `form:"start_time" json:"start_time"`
+	EndTime           string   `form:"end_time" json:"end_time"`
+	ContinuedDays     int      `form:"continued_days" json:"continued_days"`
+	LeaderID          int      `form:"leader_id" json:"leader_id"`
+	ExecutiveUserIds  []int    `form:"executive_user_ids" json:"executive_user_ids"`
+	EquipmentType     []string `form:"equipment_type" json:"equipment_type"`
+	Location          string   `form:"location" json:"location"`
+	Remark            string   `form:"remark" json:"remark"`
+}
+
+// 施工作业计划更新dto
+type ConstructionPlanUpdateDto struct {
+	MeasureLibraryIds []int    `form:"measure_library_ids" json:"measure_library_ids"`
+	StartTtime        string   `form:"start_time" json:"start_time"`
+	EndTime           string   `form:"end_time" json:"end_time"`
+	ContinuedDays     int      `form:"continued_days" json:"continued_days"`
+	LeaderID          int      `form:"leader_id" json:"leader_id"`
+	ExecutiveUserIds  []int    `form:"executive_user_ids" json:"executive_user_ids"`
+	EquipmentType     []string `form:"equipment_type" json:"equipment_type"`
+	Location          string   `form:"location" json:"location"`
+	Remark            string   `form:"remark" json:"remark"`
 }
 
 // 施工作业更新dto
 type ConstructionUpdateDto struct {
-	MeasureIds       []int  `form:"measure_id" json:"measure_id,omitempty"`
-	StartTtime       string `form:"start_time" json:"start_time,omitempty"`
-	EndTime          string `form:"end_time" json:"end_time,omitempty"`
-	ActualTime       string `form:"actual_time" json:"actual_time,omitempty"`
-	EquipmentType    string `form:"equipment_type" json:"equipment_type,omitempty"`
-	Location         string `form:"location" json:"location,omitempty"`
-	Status           string `form:"status" json:"status,omitempty"`
-	ExecutiveUserIds []int  `form:"executive_user_ids" json:"executive_user_ids,omitempty"`
-	Remark           string `form:"remark" json:"remark,omitempty"`
+	MeasureLibraryIds []int    `form:"measure_library_ids" json:"measure_library_ids,omitempty"`
+	StartTtime        string   `form:"start_time" json:"start_time,omitempty"`
+	EndTime           string   `form:"end_time" json:"end_time,omitempty"`
+	EquipmentType     []string `form:"equipment_type" json:"equipment_type,omitempty"`
+	Location          string   `form:"location" json:"location,omitempty"`
+	ExecutiveUserIds  []int    `form:"executive_user_ids" json:"executive_user_ids,omitempty"`
+	Remark            string   `form:"remark" json:"remark,omitempty"`
 	// 施工任务相关
 	ManagerID         int                `form:"manager_id" json:"manager_id,omitempty"`
 	EngineerID        int                `form:"engineer_id" json:"engineer_id,omitempty"`

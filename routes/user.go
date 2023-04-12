@@ -1,18 +1,18 @@
 package server
 
 import (
-	userController "go-template/controllers"
+	controller "go-template/controllers"
 
 	"github.com/gin-gonic/gin"
 )
 
 // SetApiUserRoutes returns 用户相关接口
 func SetApiUserRoutes(router *gin.RouterGroup) {
-	userRouter := router.Group("/v1/users")
-	userRouter.GET("/", userController.GetUsers)           // 获取用户列表
-	userRouter.GET("/:id", userController.GetUser)         // 获取指定用户
-	userRouter.POST("/", userController.AddUser)           // 新增用户
-	userRouter.PUT("/:id", userController.UpdateUser)      // 更新指定用户
-	userRouter.DELETE("/:ids", userController.DeleteUsers) // 删除用户
+	routerGroup := router.Group("/v1/users")
+	routerGroup.GET("/", controller.GetUsers)           // 获取用户列表
+	routerGroup.GET("/:id", controller.GetUser)         // 获取指定用户
+	routerGroup.POST("/", controller.AddUser)           // 新增用户
+	routerGroup.PUT("/:id", controller.UpdateUser)      // 更新指定用户
+	routerGroup.DELETE("/:ids", controller.DeleteUsers) // 删除用户
 
 }

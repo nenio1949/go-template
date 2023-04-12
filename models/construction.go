@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"go-template/common"
 	"time"
 
@@ -11,18 +10,21 @@ import (
 // 施工作业model
 type Construction struct {
 	Model
-	MeasureLibrarys []MeasureLibrary `json:"measure_libraries" gorm:"many2many:construction_measure;"`
-	StartTime       LocalTime        `json:"start_time" gorm:"comment:开始时间"`
-	EndTime         LocalTime        `json:"end_time" gorm:"comment:结束时间"`
-	ActualTime      LocalTime        `json:"actual_time" gorm:"comment:实际完成时间"`
-	EquipmentType   string           `json:"equipment_type" gorm:"comment:设备类型"`
-	Location        string           `json:"location" gorm:"comment:作业地点"`
-	Status          string           `json:"status" gorm:"comment:状态"`
-	ExecutiveUsers  []User           `json:"executive_users" gorm:"many2many:construction_user;"`
-	Remark          string           `json:"remark" gorm:"comment:备注"`
+	MeasureLibraries []MeasureLibrary `json:"measure_libraries" gorm:"many2many:construction_measure_library;"`
+	StartTime        LocalTime        `json:"start_time" gorm:"comment:开始时间"`
+	EndTime          LocalTime        `json:"end_time" gorm:"comment:结束时间"`
+	ActualTime       LocalTime        `json:"actual_time" gorm:"comment:实际完成时间"`
+	EquipmentType    Strs             `json:"equipment_type" gorm:"type:text;comment:设备类型"`
+	Location         string           `json:"location" gorm:"comment:作业地点"`
+	// 1: '未开始', 2: '进行中', 3: '已完成', 4: '已延期'
+	Status string `json:"status" gorm:"comment:状态"`
+	// 1: '待提交', 2: '待执行', 3: '审批中', 4: '执行中', 5: '复盘待上传', 6: '录音待上传', 7: '已完成', 8: '已终止', 9: '安全资质审批中'
+	JobStatus      string `json:"job_status" gorm:"comment:作业状态"`
+	ExecutiveUsers []User `json:"executive_users" gorm:"many2many:construction_user;"`
+	Remark         string `json:"remark" gorm:"comment:备注"`
 	// 施工任务相关
 	ManagerID         int             `json:"manager_id" gorm:"comment:项目经理id"`
-	EngineerID        int             `json:"engineer_id" gorm:"comment:项目做过id"`
+	EngineerID        int             `json:"engineer_id" gorm:"comment:项目总工id"`
 	LeaderID          int             `json:"leader_id" gorm:"comment:组长id"`
 	RecipientID       int             `json:"recipient_id" gorm:"comment:领取人id"`
 	PhoneID           string          `json:"phone_id" gorm:"comment:领取设备id"`
@@ -33,8 +35,8 @@ type Construction struct {
 	WorkScope         string          `json:"work_scope" gorm:"type:text;comment:工作范围"`
 	Restrictions      string          `json:"restrictions" gorm:"type:text;comment:安全限制条件"`
 	Matter            string          `json:"matter" gorm:"type:text;comment:注意事项"`
-	IsRisk            bool            `json:"is_risk" gorm:"comment:是否设计高风险"`
-	TemporaryUsers    []TemporaryUser `json:"temporary_users" gorm:"foreignKey:ConstructionId"`
+	IsRisk            bool            `json:"is_risk" gorm:"comment:是否涉及高风险"`
+	TemporaryUsers    []TemporaryUser `json:"temporary_users" gorm:"many2many:construction_temporary_user"`
 
 	// 安全交底
 	Explain    string    `json:"explain" gorm:"comment:补充说明"`
@@ -87,16 +89,170 @@ type Construction struct {
 }
 
 // 获取施工作业列表
-func GetConstructions(constructionId int) ([]*Construction, int64, error) {
+func GetConstructionPlans(params common.PageSearchConstructionDto) ([]*common.ConstructionPlanDto, int64, error) {
+	var constructions []*Construction
+	var constructionPlans []*common.ConstructionPlanDto
+	var err error
+	tx := db.Where("deleted = 0")
+	if len(params.Status) > 0 {
+		tx.Where("status = ?", params.Status)
+	}
+
+	tx.Preload("MeasureLibraries").Preload("ExecutiveUsers").Preload("TemporaryUsers")
+
+	if len(params.Order) > 0 {
+		tx.Order(params.Order)
+	} else {
+		tx.Order("id DESC")
+	}
+
+	if params.Pagination {
+		err = tx.Offset(params.Page - 1).Limit(params.Size).Find(&constructions).Error
+	} else {
+		err = tx.Find(&constructions).Error
+	}
+
+	var total int64
+	tx.Count(&total)
+
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, 0, err
+	}
+
+	if len(constructions) > 0 {
+
+		for a := 0; a < len(constructions); a++ {
+			var measureLibraries []common.MeasureLibraryDto
+			var executiveUsers []map[string]interface{}
+
+			for b := 0; b < len(constructions[a].MeasureLibraries); b++ {
+				measureLibraries = append(measureLibraries, common.MeasureLibraryDto{
+					ID:       constructions[a].MeasureLibraries[b].ID,
+					HomeWork: constructions[a].MeasureLibraries[b].HomeWork,
+					RiskType: constructions[a].MeasureLibraries[b].RiskType,
+					Name:     constructions[a].MeasureLibraries[b].Name,
+					Risk:     constructions[a].MeasureLibraries[b].Risk,
+					Measures: constructions[a].MeasureLibraries[b].Measures,
+				})
+
+			}
+			for c := 0; c < len(constructions[a].ExecutiveUsers); c++ {
+				executiveUsers = append(executiveUsers, map[string]interface{}{
+					"id":   constructions[a].ExecutiveUsers[c].ID,
+					"name": constructions[a].ExecutiveUsers[c].Name,
+				})
+			}
+
+			leader, _ := GetUser(constructions[a].LeaderID)
+
+			constructionPlans = append(constructionPlans, &common.ConstructionPlanDto{
+				ID:               constructions[a].ID,
+				MeasureLibraries: measureLibraries,
+				StartTtime:       constructions[a].StartTime.String(),
+				EndTime:          constructions[a].EndTime.String(),
+				Location:         constructions[a].Location,
+				Remark:           constructions[a].Remark,
+				Status:           constructions[a].Status,
+				EquipmentType:    constructions[a].EquipmentType,
+				Leader:           map[string]interface{}{"id": constructions[a].LeaderID, "name": leader.Name},
+				ExecutiveUsers:   executiveUsers,
+			})
+		}
+	}
+
+	return constructionPlans, total, nil
+}
+
+// 根据id获取施工作业信息
+func GetConstructionPlan(id int) (*Construction, error) {
+	var construction Construction
+	err := db.Preload("MeasureLibraries").Preload("ExecutiveUsers").Preload("TemporaryUsers").Where("id = ? AND deleted = ? ", id, 0).First(&construction).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &construction, nil
+}
+
+// 新增施工作业计划
+func AddConstructionPlan(params common.ConstructionPlanCreateDto) (int, error) {
+
+	startTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.StartTtime, time.Local)
+	endTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.EndTime, time.Local)
+	measureLibraries, _ := GetMeasureLibrariesByIds(params.MeasureLibraryIds)
+	executiveUsers, _ := GetUsersByIds(params.ExecutiveUserIds)
+
+	construction := Construction{
+		StartTime:        LocalTime{Time: startTime},
+		EndTime:          LocalTime{Time: endTime},
+		MeasureLibraries: measureLibraries,
+		LeaderID:         params.LeaderID,
+		ExecutiveUsers:   executiveUsers,
+		EquipmentType:    params.EquipmentType,
+		Location:         params.Location,
+		Remark:           params.Remark,
+	}
+
+	if err := db.Create(&construction).Error; err != nil {
+		return 0, err
+	}
+
+	return construction.ID, nil
+}
+
+// 更新施工作业计划
+func UpdateConstructionPlan(id int, params common.ConstructionPlanUpdateDto) (bool, error) {
+	var oldConstruction *Construction
+	var err error
+
+	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
+		return false, err
+	}
+	startTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.StartTtime, time.Local)
+	endTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.EndTime, time.Local)
+	measureLibraries, _ := GetMeasureLibrariesByIds(params.MeasureLibraryIds)
+	executiveUsers, _ := GetUsersByIds(params.ExecutiveUserIds)
+
+	construction := Construction{
+		StartTime:        LocalTime{Time: startTime},
+		EndTime:          LocalTime{Time: endTime},
+		MeasureLibraries: measureLibraries,
+		LeaderID:         params.LeaderID,
+		ExecutiveUsers:   executiveUsers,
+		EquipmentType:    params.EquipmentType,
+		Location:         params.Location,
+		Remark:           params.Remark,
+	}
+
+	if err := db.Create(&construction).Error; err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
+// 获取施工作业列表
+func GetConstructions(params common.PageSearchConstructionDto) ([]*Construction, int64, error) {
 	var constructions []*Construction
 	var err error
 	tx := db.Where("deleted = 0")
-	if constructionId > 0 {
-		tx.Where("construction_id = ?", constructionId)
+	if len(params.Status) > 0 {
+		tx.Where("status = ?", params.Status)
 	}
-	tx.Order("id DESC")
 
-	tx.Find(&constructions)
+	tx.Preload("MeasureLibraries").Preload("ExecutiveUsers").Preload("TemporaryUsers")
+
+	if len(params.Order) > 0 {
+		tx.Order(params.Order)
+	} else {
+		tx.Order("id DESC")
+	}
+
+	if params.Pagination {
+		err = tx.Offset(params.Page - 1).Limit(params.Size).Find(&constructions).Error
+	} else {
+		err = tx.Find(&constructions).Error
+	}
 
 	var total int64
 	tx.Count(&total)
@@ -111,40 +267,12 @@ func GetConstructions(constructionId int) ([]*Construction, int64, error) {
 // 根据id获取施工作业信息
 func GetConstruction(id int) (*Construction, error) {
 	var construction Construction
-	err := db.Where("id = ? AND deleted = ? ", id, 0).First(&construction).Error
+	err := db.Preload("MeasureLibraries").Preload("ExecutiveUsers").Preload("TemporaryUsers").Where("id = ? AND deleted = ? ", id, 0).First(&construction).Error
 	if err != nil {
 		return nil, err
 	}
 
 	return &construction, nil
-}
-
-// 新增施工作业
-func AddConstruction(params common.ConstructionCreateDto) (int, error) {
-
-	startTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.StartTtime, time.Local)
-	endTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.EndTime, time.Local)
-	measureLibraries, _ := GetMeasureLibrarysByIds(params.MeasureIds)
-	executiveUsers, _ := GetUsersByIds(params.ExecutiveUserIds)
-
-	construction := Construction{
-		StartTime:       LocalTime{Time: startTime},
-		EndTime:         LocalTime{Time: endTime},
-		MeasureLibrarys: measureLibraries,
-		LeaderID:        params.LeaderID,
-		ExecutiveUsers:  executiveUsers,
-		EquipmentType:   params.EquipmentType,
-		Location:        params.Location,
-		Remark:          params.Remark,
-	}
-
-	fmt.Printf("construction: %v\n", construction)
-
-	if err := db.Create(&construction).Error; err != nil {
-		return 0, err
-	}
-
-	return construction.ID, nil
 }
 
 // 更新施工作业
@@ -159,20 +287,19 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 
 	startTime, _ := time.ParseInLocation("20060102150405", params.StartTtime, time.Local)
 	endTime, _ := time.ParseInLocation("20060102150405", params.EndTime, time.Local)
-	measureLibraries, _ := GetMeasureLibrarysByIds(params.MeasureIds)
+	measureLibraries, _ := GetMeasureLibrariesByIds(params.MeasureLibraryIds)
 	executiveUsers, _ := GetUsersByIds(params.ExecutiveUserIds)
 	noticeTime, _ := time.ParseInLocation("20060102150405", params.NoticeTime, time.Local)
 	clockTime, _ := time.ParseInLocation("20060102150405", params.ClockTime, time.Local)
 	quitClockTime, _ := time.ParseInLocation("20060102150405", params.QuitClockTime, time.Local)
 	handoverTime, _ := time.ParseInLocation("20060102150405", params.HandoverTime, time.Local)
 	replayTime, _ := time.ParseInLocation("20060102150405", params.ReplayTime, time.Local)
-	// ids, _ := AddOrUpdateTemporaryUsers(id, params.TemporaryUser)
-	// temporaryUsers, _ := GetTemporaryUsersByIds(ids)
 
 	for a := 0; a < len(params.TemporaryUsers); a++ {
 		temporaryUsers = append(temporaryUsers, TemporaryUser{
 			Model:         Model{ID: params.TemporaryUsers[a].ID},
 			Name:          params.TemporaryUsers[a].Name,
+			Mobile:        params.TemporaryUsers[a].Mobile,
 			Department:    params.TemporaryUsers[a].Department,
 			DockingUserID: params.TemporaryUsers[a].DockingUserID,
 		})
@@ -180,7 +307,7 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 
 	oldConstruction.StartTime = LocalTime{Time: startTime}
 	oldConstruction.EndTime = LocalTime{Time: endTime}
-	oldConstruction.MeasureLibrarys = measureLibraries
+	oldConstruction.MeasureLibraries = measureLibraries
 	oldConstruction.ExecutiveUsers = executiveUsers
 	oldConstruction.EquipmentType = params.EquipmentType
 	oldConstruction.Location = params.Location
@@ -241,4 +368,14 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 	}
 
 	return true, nil
+}
+
+// 删除施工作业
+func DeleteConstructions(ids []int) (int, error) {
+	r := db.Model(&Construction{}).Where("id IN (?)", ids).Updates(map[string]interface{}{"deleted": 1})
+	if r.Error != nil {
+		return 0, r.Error
+	}
+
+	return int(r.RowsAffected), nil
 }

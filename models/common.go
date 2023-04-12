@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"go.uber.org/zap"
@@ -34,8 +35,12 @@ type LocalTime struct {
 }
 
 func (t LocalTime) MarshalJSON() ([]byte, error) {
-	tTime := time.Time(t.Time)
-	return []byte(fmt.Sprintf("\"%v\"", tTime.Format("2006-01-02 15:04:05"))), nil
+	if t.Time.IsZero() {
+		return []byte(fmt.Sprintf("\"%v\"", "")), nil
+	} else {
+		tTime := time.Time(t.Time)
+		return []byte(fmt.Sprintf("\"%v\"", tTime.Format("2006-01-02 15:04:05"))), nil
+	}
 }
 
 func (t LocalTime) Value() (driver.Value, error) {
@@ -45,6 +50,7 @@ func (t LocalTime) Value() (driver.Value, error) {
 	if tlt.UnixNano() == zeroTime.UnixNano() {
 		return nil, nil
 	}
+
 	return tlt, nil
 }
 
@@ -58,6 +64,23 @@ func (t *LocalTime) Scan(v interface{}) error {
 }
 
 /*******************时间格式化****************/
+
+/*******************字符数组*****************/
+type Strs []string
+
+func (m *Strs) Scan(val interface{}) error {
+	s := val.([]uint8)
+	ss := strings.Split(string(s), "|")
+	*m = ss
+	return nil
+}
+
+func (m Strs) Value() (driver.Value, error) {
+	str := strings.Join(m, "|")
+	return str, nil
+}
+
+/*******************字符数组*****************/
 
 // 初始化数据库
 func InitializeDB() *gorm.DB {
