@@ -15,7 +15,7 @@ type Log struct {
 
 // 获取日志列表
 func GetLogs(constructionId int) ([]*Log, int64, error) {
-	var roles []*Log
+	var logs []*Log
 	var err error
 	tx := db.Where("deleted = 0")
 	if constructionId > 0 {
@@ -23,7 +23,7 @@ func GetLogs(constructionId int) ([]*Log, int64, error) {
 	}
 	tx.Order("id DESC")
 
-	tx.Find(&roles)
+	tx.Find(&logs)
 
 	var total int64
 	tx.Count(&total)
@@ -32,30 +32,30 @@ func GetLogs(constructionId int) ([]*Log, int64, error) {
 		return nil, 0, err
 	}
 
-	return roles, total, nil
+	return logs, total, nil
 }
 
 // 根据id获取日志信息
 func GetLog(id int) (*Log, error) {
-	var role Log
-	err := db.Where("id = ? AND deleted = ? ", id, 0).First(&role).Error
+	var log Log
+	err := db.Where("id = ? AND deleted = ? ", id, 0).First(&log).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return &role, nil
+	return &log, nil
 }
 
 // 新增日志
 func AddLog(content string, user User) (int, error) {
-	role := Log{
+	log := Log{
 		Content: content,
 		UserID:  user.ID,
 	}
 
-	if err := db.Create(&role).Error; err != nil {
+	if err := db.Create(&log).Error; err != nil {
 		return 0, err
 	}
 
-	return role.ID, nil
+	return log.ID, nil
 }

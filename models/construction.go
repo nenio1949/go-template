@@ -1,9 +1,11 @@
 package models
 
 import (
+	"errors"
 	"go-template/common"
 	"time"
 
+	"github.com/jasonlvhit/gocron"
 	"gorm.io/gorm"
 )
 
@@ -11,15 +13,15 @@ import (
 type Construction struct {
 	Model
 	MeasureLibraries []MeasureLibrary `json:"measure_libraries" gorm:"many2many:construction_measure_library;"`
-	StartTime        LocalTime        `json:"start_time" gorm:"comment:开始时间"`
-	EndTime          LocalTime        `json:"end_time" gorm:"comment:结束时间"`
-	ActualTime       LocalTime        `json:"actual_time" gorm:"comment:实际完成时间"`
-	EquipmentType    Strs             `json:"equipment_type" gorm:"type:text;comment:设备类型"`
+	StartTime        common.LocalTime `json:"start_time" gorm:"comment:开始时间"`
+	EndTime          common.LocalTime `json:"end_time" gorm:"comment:结束时间"`
+	ActualTime       common.LocalTime `json:"actual_time" gorm:"comment:实际完成时间"`
+	EquipmentType    common.Strs      `json:"equipment_type" gorm:"type:text;comment:设备类型"`
 	Location         string           `json:"location" gorm:"comment:作业地点"`
 	// 1: '未开始', 2: '进行中', 3: '已完成', 4: '已延期'
-	Status string `json:"status" gorm:"comment:状态"`
+	Status string `json:"status" gorm:"default:'1';comment:状态"`
 	// 1: '待提交', 2: '待执行', 3: '审批中', 4: '执行中', 5: '复盘待上传', 6: '录音待上传', 7: '已完成', 8: '已终止', 9: '安全资质审批中'
-	JobStatus      string `json:"job_status" gorm:"comment:作业状态"`
+	JobStatus      string `json:"job_status" gorm:"default:'1';comment:作业状态"`
 	ExecutiveUsers []User `json:"executive_users" gorm:"many2many:construction_user;"`
 	Remark         string `json:"remark" gorm:"comment:备注"`
 	// 施工任务相关
@@ -39,17 +41,17 @@ type Construction struct {
 	TemporaryUsers    []TemporaryUser `json:"temporary_users" gorm:"many2many:construction_temporary_user"`
 
 	// 安全交底
-	Explain    string    `json:"explain" gorm:"comment:补充说明"`
-	IsNotice   bool      `json:"is_notice" gorm:"comment:是否确认宣读"`
-	NoticeTime LocalTime `json:"notice_time" gorm:"comment:宣读时间"`
-	StayTime   int       `json:"stay_time" gorm:"comment:停留时间(单位秒)"`
+	Explain    string           `json:"explain" gorm:"comment:补充说明"`
+	IsNotice   bool             `json:"is_notice" gorm:"comment:是否确认宣读"`
+	NoticeTime common.LocalTime `json:"notice_time" gorm:"comment:宣读时间"`
+	StayTime   int              `json:"stay_time" gorm:"comment:停留时间(单位秒)"`
 
 	// 工具人员清点
-	ToolNum     int       `json:"tool_num" gorm:"comment:工具数量"`
-	UserNum     int       `json:"user_num" gorm:"comment:人员数量"`
-	ClockTime   LocalTime `json:"clock_time" gorm:"comment:打卡时间"`
-	ClockUserID int       `json:"clock_user_id" gorm:"comment:打卡人id"`
-	ToolRemark  string    `json:"tool_remark" gorm:"type:text;comment:工具清点备注"`
+	ToolNum     int              `json:"tool_num" gorm:"comment:工具数量"`
+	UserNum     int              `json:"user_num" gorm:"comment:人员数量"`
+	ClockTime   common.LocalTime `json:"clock_time" gorm:"comment:打卡时间"`
+	ClockUserID int              `json:"clock_user_id" gorm:"comment:打卡人id"`
+	ToolRemark  string           `json:"tool_remark" gorm:"type:text;comment:工具清点备注"`
 
 	// 作业边界
 	LightRemark   string `json:"light_remark" gorm:"type:text;comment:红闪灯备注"`
@@ -60,30 +62,30 @@ type Construction struct {
 	ProcessRemark string `json:"process_remark" gorm:"type:text;comment:作业过程备注"`
 
 	// 作业出清
-	QuitToolNum       int       `json:"quit_tool_num" gorm:"comment:出清工具数量"`
-	QuitUserNum       int       `json:"quit_user_num" gorm:"comment:出清人员数量"`
-	QuitToolRemark    string    `json:"quit_tool_remark" gorm:"type:text;comment:工具备注"`
-	QuitUserRemark    string    `json:"quit_user_remark" gorm:"type:text;comment:人员备注"`
-	QuitClockTime     LocalTime `json:"quit_clock_time" gorm:"comment:出清打卡时间"`
-	QuitClockLocation string    `json:"quit_clock_location" gorm:"comment:出清打卡地点"`
-	QuitClockUserID   int       `json:"quit_clock_user_id" gorm:"comment:出清打卡人id"`
+	QuitToolNum       int              `json:"quit_tool_num" gorm:"comment:出清工具数量"`
+	QuitUserNum       int              `json:"quit_user_num" gorm:"comment:出清人员数量"`
+	QuitToolRemark    string           `json:"quit_tool_remark" gorm:"type:text;comment:工具备注"`
+	QuitUserRemark    string           `json:"quit_user_remark" gorm:"type:text;comment:人员备注"`
+	QuitClockTime     common.LocalTime `json:"quit_clock_time" gorm:"comment:出清打卡时间"`
+	QuitClockLocation string           `json:"quit_clock_location" gorm:"comment:出清打卡地点"`
+	QuitClockUserID   int              `json:"quit_clock_user_id" gorm:"comment:出清打卡人id"`
 
 	// 作业交接
-	HaveHandover bool      `json:"have_handover" gorm:"comment:是否交接"`
-	Handover     string    `json:"handover" gorm:"type:text;comment:交接内容"`
-	HandoverTime LocalTime `json:"handover_time" gorm:"comment:交接时间"`
-	HandoverType string    `json:"handover_type" gorm:"comment:交接类型"`
+	HaveHandover bool             `json:"have_handover" gorm:"comment:是否交接"`
+	Handover     string           `json:"handover" gorm:"type:text;comment:交接内容"`
+	HandoverTime common.LocalTime `json:"handover_time" gorm:"comment:交接时间"`
+	HandoverType string           `json:"handover_type" gorm:"comment:交接类型"`
 
 	// 每日复盘
-	ReplayContext  string    `json:"replay_context" gorm:"type:text;comment:复盘内容"`
-	ReplayTime     LocalTime `json:"replay_time" gorm:"comment:复盘时间"`
-	SoundRemark    string    `json:"sound_remark" gorm:"type:text;comment:录音备注"`
-	MobileReceived bool      `json:"mobile_received" gorm:"comment:手机是否已领取"`
-	WorkedType     string    `json:"worker_type" gorm:"comment:作业登记类型"`
-	WorkedRemark   string    `json:"worker_remark" gorm:"type:text;comment:作业登记备注"`
-	LogoutJob      bool      `json:"logout_job" gorm:"comment:是否注销作业令"`
-	LogoutType     string    `json:"logout_type" gorm:"comment:注销类型"`
-	LogoutRemark   string    `json:"logout_remark" gorm:"type:text;comment:作业注销备注"`
+	ReplayContext  string           `json:"replay_context" gorm:"type:text;comment:复盘内容"`
+	ReplayTime     common.LocalTime `json:"replay_time" gorm:"comment:复盘时间"`
+	SoundRemark    string           `json:"sound_remark" gorm:"type:text;comment:录音备注"`
+	MobileReceived bool             `json:"mobile_received" gorm:"comment:手机是否已领取"`
+	WorkedType     string           `json:"worker_type" gorm:"comment:作业登记类型"`
+	WorkedRemark   string           `json:"worker_remark" gorm:"type:text;comment:作业登记备注"`
+	LogoutJob      bool             `json:"logout_job" gorm:"comment:是否注销作业令"`
+	LogoutType     string           `json:"logout_type" gorm:"comment:注销类型"`
+	LogoutRemark   string           `json:"logout_remark" gorm:"type:text;comment:作业注销备注"`
 
 	AuditStatus string `json:"audit_status" gorm:"comment:审计状态"`
 }
@@ -144,15 +146,15 @@ func GetConstructionPlans(params common.PageSearchConstructionDto) ([]*common.Co
 			}
 
 			leader, _ := GetUser(constructions[a].LeaderID)
-
+			status, _ := GetConstructionStatus("status", constructions[a].Status)
 			constructionPlans = append(constructionPlans, &common.ConstructionPlanDto{
 				ID:               constructions[a].ID,
 				MeasureLibraries: measureLibraries,
-				StartTtime:       constructions[a].StartTime.String(),
-				EndTime:          constructions[a].EndTime.String(),
+				StartTtime:       constructions[a].StartTime,
+				EndTime:          constructions[a].EndTime,
 				Location:         constructions[a].Location,
 				Remark:           constructions[a].Remark,
-				Status:           constructions[a].Status,
+				Status:           status,
 				EquipmentType:    constructions[a].EquipmentType,
 				Leader:           map[string]interface{}{"id": constructions[a].LeaderID, "name": leader.Name},
 				ExecutiveUsers:   executiveUsers,
@@ -164,14 +166,88 @@ func GetConstructionPlans(params common.PageSearchConstructionDto) ([]*common.Co
 }
 
 // 根据id获取施工作业信息
-func GetConstructionPlan(id int) (*Construction, error) {
+func GetConstructionPlan(id int) (*common.ConstructionPlanDto, error) {
 	var construction Construction
+	var constructionPlan common.ConstructionPlanDto
+	var measureLibraries []common.MeasureLibraryDto
+	var executiveUsers []map[string]interface{}
 	err := db.Preload("MeasureLibraries").Preload("ExecutiveUsers").Preload("TemporaryUsers").Where("id = ? AND deleted = ? ", id, 0).First(&construction).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return &construction, nil
+	for b := 0; b < len(construction.MeasureLibraries); b++ {
+		measureLibraries = append(measureLibraries, common.MeasureLibraryDto{
+			ID:       construction.MeasureLibraries[b].ID,
+			HomeWork: construction.MeasureLibraries[b].HomeWork,
+			RiskType: construction.MeasureLibraries[b].RiskType,
+			Name:     construction.MeasureLibraries[b].Name,
+			Risk:     construction.MeasureLibraries[b].Risk,
+			Measures: construction.MeasureLibraries[b].Measures,
+		})
+
+	}
+
+	for c := 0; c < len(construction.ExecutiveUsers); c++ {
+		executiveUsers = append(executiveUsers, map[string]interface{}{
+			"id":   construction.ExecutiveUsers[c].ID,
+			"name": construction.ExecutiveUsers[c].Name,
+		})
+	}
+	leader, _ := GetUser(construction.LeaderID)
+	status, _ := GetConstructionStatus("status", construction.Status)
+	constructionPlan = common.ConstructionPlanDto{
+		ID:               construction.ID,
+		MeasureLibraries: measureLibraries,
+		StartTtime:       construction.StartTime,
+		EndTime:          construction.EndTime,
+		Location:         construction.Location,
+		Remark:           construction.Remark,
+		Status:           status,
+		EquipmentType:    construction.EquipmentType,
+		Leader:           map[string]interface{}{"id": construction.LeaderID, "name": leader.Name},
+		ExecutiveUsers:   executiveUsers,
+	}
+
+	return &constructionPlan, nil
+}
+
+// 根据状态获取状态对象
+func GetConstructionStatus(statusType string, status string) (map[string]interface{}, error) {
+	if statusType == "status" {
+		switch status {
+		case "1":
+			return map[string]interface{}{"id": "1", "name": "未开始"}, nil
+		case "2":
+			return map[string]interface{}{"id": "2", "name": "进行中"}, nil
+		case "3":
+			return map[string]interface{}{"id": "3", "name": "已完成"}, nil
+		case "4":
+			return map[string]interface{}{"id": "4", "name": "已延期"}, nil
+		}
+	} else if statusType == "jobStatus" {
+		switch status {
+		case "1":
+			return map[string]interface{}{"id": "1", "name": "待提交"}, nil
+		case "2":
+			return map[string]interface{}{"id": "2", "name": "待执行"}, nil
+		case "3":
+			return map[string]interface{}{"id": "3", "name": "审批中"}, nil
+		case "4":
+			return map[string]interface{}{"id": "4", "name": "执行中"}, nil
+		case "5":
+			return map[string]interface{}{"id": "5", "name": "复盘待上传"}, nil
+		case "6":
+			return map[string]interface{}{"id": "6", "name": "录音待上传"}, nil
+		case "7":
+			return map[string]interface{}{"id": "7", "name": "已完成"}, nil
+		case "8":
+			return map[string]interface{}{"id": "8", "name": "已终止"}, nil
+		case "9":
+			return map[string]interface{}{"id": "9", "name": "安全资质审批中"}, nil
+		}
+	}
+	return nil, errors.New("参数错误")
 }
 
 // 新增施工作业计划
@@ -183,8 +259,8 @@ func AddConstructionPlan(params common.ConstructionPlanCreateDto) (int, error) {
 	executiveUsers, _ := GetUsersByIds(params.ExecutiveUserIds)
 
 	construction := Construction{
-		StartTime:        LocalTime{Time: startTime},
-		EndTime:          LocalTime{Time: endTime},
+		StartTime:        common.LocalTime{Time: startTime},
+		EndTime:          common.LocalTime{Time: endTime},
 		MeasureLibraries: measureLibraries,
 		LeaderID:         params.LeaderID,
 		ExecutiveUsers:   executiveUsers,
@@ -213,18 +289,16 @@ func UpdateConstructionPlan(id int, params common.ConstructionPlanUpdateDto) (bo
 	measureLibraries, _ := GetMeasureLibrariesByIds(params.MeasureLibraryIds)
 	executiveUsers, _ := GetUsersByIds(params.ExecutiveUserIds)
 
-	construction := Construction{
-		StartTime:        LocalTime{Time: startTime},
-		EndTime:          LocalTime{Time: endTime},
-		MeasureLibraries: measureLibraries,
-		LeaderID:         params.LeaderID,
-		ExecutiveUsers:   executiveUsers,
-		EquipmentType:    params.EquipmentType,
-		Location:         params.Location,
-		Remark:           params.Remark,
-	}
+	oldConstruction.StartTime = common.LocalTime{Time: startTime}
+	oldConstruction.EndTime = common.LocalTime{Time: endTime}
+	oldConstruction.MeasureLibraries = measureLibraries
+	oldConstruction.LeaderID = params.LeaderID
+	oldConstruction.ExecutiveUsers = executiveUsers
+	oldConstruction.EquipmentType = params.EquipmentType
+	oldConstruction.Location = params.Location
+	oldConstruction.Remark = params.Remark
 
-	if err := db.Create(&construction).Error; err != nil {
+	if err := db.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&oldConstruction).Error; err != nil {
 		return false, err
 	}
 
@@ -287,13 +361,7 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 
 	startTime, _ := time.ParseInLocation("20060102150405", params.StartTtime, time.Local)
 	endTime, _ := time.ParseInLocation("20060102150405", params.EndTime, time.Local)
-	measureLibraries, _ := GetMeasureLibrariesByIds(params.MeasureLibraryIds)
 	executiveUsers, _ := GetUsersByIds(params.ExecutiveUserIds)
-	noticeTime, _ := time.ParseInLocation("20060102150405", params.NoticeTime, time.Local)
-	clockTime, _ := time.ParseInLocation("20060102150405", params.ClockTime, time.Local)
-	quitClockTime, _ := time.ParseInLocation("20060102150405", params.QuitClockTime, time.Local)
-	handoverTime, _ := time.ParseInLocation("20060102150405", params.HandoverTime, time.Local)
-	replayTime, _ := time.ParseInLocation("20060102150405", params.ReplayTime, time.Local)
 
 	for a := 0; a < len(params.TemporaryUsers); a++ {
 		temporaryUsers = append(temporaryUsers, TemporaryUser{
@@ -305,9 +373,8 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 		})
 	}
 
-	oldConstruction.StartTime = LocalTime{Time: startTime}
-	oldConstruction.EndTime = LocalTime{Time: endTime}
-	oldConstruction.MeasureLibraries = measureLibraries
+	oldConstruction.StartTime = common.LocalTime{Time: startTime}
+	oldConstruction.EndTime = common.LocalTime{Time: endTime}
 	oldConstruction.ExecutiveUsers = executiveUsers
 	oldConstruction.EquipmentType = params.EquipmentType
 	oldConstruction.Location = params.Location
@@ -315,54 +382,80 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 	oldConstruction.ManagerID = params.ManagerID
 	oldConstruction.EngineerID = params.EngineerID
 	oldConstruction.LeaderID = params.LeaderID
-	oldConstruction.RecipientID = params.RecipientID
-	oldConstruction.PhoneID = params.PhoneID
-	oldConstruction.TerminationUserID = params.TerminationUserID
-	oldConstruction.StopReason = params.StopReason
 	oldConstruction.Process = params.Process
-	oldConstruction.Content = params.Content
 	oldConstruction.WorkScope = params.WorkScope
 	oldConstruction.Restrictions = params.Restrictions
 	oldConstruction.Matter = params.Matter
 	oldConstruction.IsRisk = params.IsRisk
 	oldConstruction.TemporaryUsers = temporaryUsers
-	oldConstruction.Explain = params.Explain
-	oldConstruction.IsNotice = params.IsNotice
-	oldConstruction.NoticeTime = LocalTime{Time: noticeTime}
-	oldConstruction.StayTime = params.StayTime
-	oldConstruction.ToolNum = params.ToolNum
-	oldConstruction.UserNum = params.UserNum
-	oldConstruction.ClockTime = LocalTime{Time: clockTime}
-	oldConstruction.ClockUserID = params.ClockUserID
-	oldConstruction.ToolRemark = params.ToolRemark
-	oldConstruction.LightRemark = params.LightRemark
-	oldConstruction.LightType = params.LightType
-	oldConstruction.GuardRemark = params.GuardRemark
-	oldConstruction.GuardType = params.GuardType
-	oldConstruction.NeedJob = params.NeedJob
-	oldConstruction.ProcessRemark = params.ProcessRemark
-	oldConstruction.QuitToolNum = params.QuitToolNum
-	oldConstruction.QuitUserNum = params.QuitUserNum
-	oldConstruction.QuitToolRemark = params.QuitToolRemark
-	oldConstruction.QuitUserRemark = params.QuitUserRemark
-	oldConstruction.QuitClockTime = LocalTime{Time: quitClockTime}
-	oldConstruction.QuitClockLocation = params.QuitClockLocation
-	oldConstruction.QuitClockUserID = params.QuitClockUserID
-	oldConstruction.HaveHandover = params.HaveHandover
-	oldConstruction.Handover = params.Handover
-	oldConstruction.HandoverTime = LocalTime{Time: handoverTime}
-	oldConstruction.HandoverType = params.HandoverType
-	oldConstruction.ReplayContext = params.ReplayContext
-	oldConstruction.ReplayTime = LocalTime{Time: replayTime}
-	oldConstruction.SoundRemark = params.SoundRemark
-	oldConstruction.MobileReceived = params.MobileReceived
-	oldConstruction.WorkedType = params.WorkedType
-	oldConstruction.WorkedRemark = params.WorkedRemark
-	oldConstruction.LogoutJob = params.LogoutJob
-	oldConstruction.LogoutType = params.LogoutType
-	oldConstruction.LogoutRemark = params.LogoutRemark
-	oldConstruction.AuditStatus = params.AuditStatus
+	if params.IsSubmit {
+		oldConstruction.JobStatus = "3"
+	}
 
+	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
+		return false, r.Error
+	}
+
+	return true, nil
+}
+
+// 审批指定施工作业
+func ApproveConstruction(id int) (bool, error) {
+	var oldConstruction *Construction
+	var err error
+
+	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
+		return false, err
+	}
+
+	var ExecutiveUserNoQualificationCount int
+	for _, e := range oldConstruction.ExecutiveUsers {
+		if !e.HasQualification {
+			ExecutiveUserNoQualificationCount += 1
+		}
+	}
+	if ExecutiveUserNoQualificationCount > 0 {
+		// 存在执行人员无资质则需要人员资质审核通过后才能领取执行
+		oldConstruction.JobStatus = "9"
+	} else {
+		// 更新状态为待执行
+		oldConstruction.JobStatus = "2"
+	}
+
+	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
+		return false, r.Error
+	}
+
+	return true, nil
+}
+
+// 领取施工作业
+func ReceiveConstruction(id int) (bool, error) {
+	var oldConstruction *Construction
+	var err error
+
+	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
+		return false, err
+	}
+	// 更新状态为执行中
+	oldConstruction.JobStatus = "4"
+	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
+		return false, r.Error
+	}
+
+	return true, nil
+}
+
+// 终止施工作业
+func StopConstruction(id int) (bool, error) {
+	var oldConstruction *Construction
+	var err error
+
+	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
+		return false, err
+	}
+	// 更新状态为已终止
+	oldConstruction.JobStatus = "8"
 	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
 		return false, r.Error
 	}
@@ -378,4 +471,34 @@ func DeleteConstructions(ids []int) (int, error) {
 	}
 
 	return int(r.RowsAffected), nil
+}
+
+// 获取施工作业数量
+func GetConstructionCount() (int64, error) {
+	var total int64
+	if err := db.Model(&Construction{}).Where("deleted = 0").Count(&total).Error; err != nil {
+		return 0, err
+	}
+	return total, nil
+}
+
+// 同步施工作业状态(每隔5s执行一次)
+func SyncConstructionStatus() {
+	s := gocron.NewScheduler()
+	s.Every(5).Seconds().Do(func() {
+		var unStartCount int64
+		db.Model(&Construction{}).Where("deleted=0 AND status='1' AND start_time < now() AND end_time > now()").Count(&unStartCount)
+		if unStartCount > 0 {
+			// 当前时间处于开始与结束时间范围内且状态为未开始，自动改为进行中
+			db.Model(&Construction{}).Where("deleted=0 AND status='1' AND start_time < now() AND end_time > now()").Updates(map[string]interface{}{"status": "2"})
+		}
+
+		var expiredCount int64
+		db.Model(&Construction{}).Where("deleted=0 AND status!='3' AND end_time < now()").Count(&expiredCount)
+		if expiredCount > 0 {
+			// 当前时间大于结束时间且状态不为已完成，自动改为已延期
+			db.Model(&Construction{}).Where("deleted=0 AND status!='3' AND end_time < now()").Updates(map[string]interface{}{"status": "4"})
+		}
+	})
+	<-s.Start()
 }

@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"go-template/common"
 
 	"gorm.io/gorm"
@@ -62,7 +61,6 @@ func AddDepartment(params common.DepartmentCreateDto) (int, error) {
 		Name:     params.Name,
 		ParentID: params.ParentID,
 	}
-	fmt.Printf("ddd: %v\n", params.ParentID)
 
 	if err := db.Create(&department).Error; err != nil {
 		return 0, err

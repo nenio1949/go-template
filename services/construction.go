@@ -11,7 +11,7 @@ func GetConstructionPlans(params common.PageSearchConstructionDto) ([]*common.Co
 }
 
 // 根据id获取施工作业计划信息
-func GetConstructionPlan(id int) (*models.Construction, error) {
+func GetConstructionPlan(id int) (*common.ConstructionPlanDto, error) {
 	return models.GetConstructionPlan(id)
 }
 

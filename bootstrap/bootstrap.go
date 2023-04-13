@@ -19,5 +19,8 @@ func Init() {
 	// 初始化Redis
 	global.App.Redis = InitializeRedis()
 
+	// 同步数据
+	models.SyncData()
+
 	RunServer()
 }

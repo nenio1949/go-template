@@ -1,14 +1,12 @@
 package models
 
 import (
-	"database/sql/driver"
-	"fmt"
+	"go-template/common"
 	"go-template/global"
 	"io"
 	"log"
 	"os"
 	"strconv"
-	"strings"
 	"time"
 
 	"go.uber.org/zap"
@@ -23,64 +21,11 @@ var db *gorm.DB
 
 // 公共字段
 type Model struct {
-	ID        int       `json:"id" gorm:"primaryKey;comment:主键"`
-	CreatedAt LocalTime `json:"created_at" gorm:"autoCreateTime:milli;comment:创建时间"`
-	UpdatedAt LocalTime `json:"updated_at" gorm:"autoUpdateTime:milli;comment:更新时间"`
-	Deleted   bool      `json:"deleted" gorm:"index;default:false;comment:是否逻辑删除"`
+	ID        int              `json:"id" gorm:"primaryKey;comment:主键"`
+	CreatedAt common.LocalTime `json:"created_at" gorm:"autoCreateTime:milli;comment:创建时间"`
+	UpdatedAt common.LocalTime `json:"updated_at" gorm:"autoUpdateTime:milli;comment:更新时间"`
+	Deleted   bool             `json:"deleted" gorm:"index;default:false;comment:是否逻辑删除"`
 }
-
-/*****************时间格式化***************/
-type LocalTime struct {
-	time.Time
-}
-
-func (t LocalTime) MarshalJSON() ([]byte, error) {
-	if t.Time.IsZero() {
-		return []byte(fmt.Sprintf("\"%v\"", "")), nil
-	} else {
-		tTime := time.Time(t.Time)
-		return []byte(fmt.Sprintf("\"%v\"", tTime.Format("2006-01-02 15:04:05"))), nil
-	}
-}
-
-func (t LocalTime) Value() (driver.Value, error) {
-	var zeroTime time.Time
-	tlt := time.Time(t.Time)
-	//判断给定时间是否和默认零时间的时间戳相同
-	if tlt.UnixNano() == zeroTime.UnixNano() {
-		return nil, nil
-	}
-
-	return tlt, nil
-}
-
-func (t *LocalTime) Scan(v interface{}) error {
-	value, ok := v.(time.Time)
-	if ok {
-		*t = LocalTime{Time: value}
-		return nil
-	}
-	return fmt.Errorf("can not convert %v to timestamp", v)
-}
-
-/*******************时间格式化****************/
-
-/*******************字符数组*****************/
-type Strs []string
-
-func (m *Strs) Scan(val interface{}) error {
-	s := val.([]uint8)
-	ss := strings.Split(string(s), "|")
-	*m = ss
-	return nil
-}
-
-func (m Strs) Value() (driver.Value, error) {
-	str := strings.Join(m, "|")
-	return str, nil
-}
-
-/*******************字符数组*****************/
 
 // 初始化数据库
 func InitializeDB() *gorm.DB {
@@ -186,9 +131,15 @@ func initMySqlTables(db *gorm.DB) {
 		TemporaryUser{},
 		MeasureLibrary{},
 		File{},
+		Log{},
 	)
 	if err != nil {
 		global.App.Log.Error("migrate table failed", zap.Any("err", err))
 		os.Exit(0)
 	}
+}
+
+// 同步数据
+func SyncData() {
+	go SyncConstructionStatus()
 }

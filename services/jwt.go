@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 )
 
 // 所有需要颁发 token 的用户模型必须实现这个接口
@@ -97,4 +98,14 @@ func GetUserInfo(GuardName string, id int) (user *models.User, err error) {
 		err = errors.New("guard " + GuardName + " does not exist")
 	}
 	return
+}
+
+// 根据请求获取当前用户信息
+func GetUserInfoByRequest(c *gin.Context) (*models.User, error) {
+	id, err := strconv.Atoi(c.GetString("id"))
+	if err != nil {
+		return nil, err
+	}
+
+	return GetUser(id)
 }

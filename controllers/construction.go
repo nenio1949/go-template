@@ -23,27 +23,27 @@ func GetConstructionPlans(c *gin.Context) {
 		return
 	}
 
-	constructions, total, err := service.GetConstructionPlans(form)
+	constructionPlans, total, err := service.GetConstructionPlans(form)
 	if err != nil {
 		common.BusinessFail(c, err.Error())
 		return
 	}
-	common.Success(c, map[string]interface{}{"constructions": constructions, "total": total})
+	common.Success(c, map[string]interface{}{"constructions": constructionPlans, "total": total})
 }
 
-// 根据id获取指定施工作业
+// 根据id获取指定施工作业计划
 func GetConstructionPlan(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		common.BusinessFail(c, err.Error())
 		return
 	}
-	construction, err := service.GetConstructionPlan(id)
+	constructionPlan, err := service.GetConstructionPlan(id)
 	if err != nil {
 		common.BusinessFail(c, err.Error())
 		return
 	}
-	common.Success(c, construction)
+	common.Success(c, constructionPlan)
 }
 
 // 新增施工作业计划
@@ -77,12 +77,12 @@ func UpdateConstructionPlan(c *gin.Context) {
 		return
 	}
 
-	number, err := service.UpdateConstructionPlan(id, form)
+	success, err := service.UpdateConstructionPlan(id, form)
 	if err != nil {
 		common.BusinessFail(c, err.Error())
 		return
 	}
-	common.Success(c, number)
+	common.Success(c, success)
 }
 
 // 删除施工作业

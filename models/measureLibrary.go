@@ -9,11 +9,11 @@ import (
 // 安全措施库model
 type MeasureLibrary struct {
 	Model
-	HomeWork string `json:"home_work" gorm:"comment:作业环节"`
-	RiskType string `json:"risk_type" gorm:"comment:风险类型"`
-	Name     string `json:"name" gorm:"comment:作业类型"`
-	Risk     string `json:"risk" gorm:"comment:潜在风险"`
-	Measures Strs   `json:"measures" gorm:"type:text;comment:安全措施"`
+	HomeWork string      `json:"home_work" gorm:"comment:作业环节"`
+	RiskType string      `json:"risk_type" gorm:"comment:风险类型"`
+	Name     string      `json:"name" gorm:"comment:作业类型"`
+	Risk     string      `json:"risk" gorm:"comment:潜在风险"`
+	Measures common.Strs `json:"measures" gorm:"type:text;comment:安全措施"`
 }
 
 // 获取措施库列表

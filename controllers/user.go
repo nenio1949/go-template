@@ -78,12 +78,12 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	number, err := service.UpdateUser(id, form)
+	success, err := service.UpdateUser(id, form)
 	if err != nil {
 		common.BusinessFail(c, err.Error())
 		return
 	}
-	common.Success(c, number)
+	common.Success(c, success)
 }
 
 // 删除用户

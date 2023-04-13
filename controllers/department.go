@@ -78,12 +78,12 @@ func UpdateDepartment(c *gin.Context) {
 		return
 	}
 
-	number, err := service.UpdateDepartment(id, form)
+	success, err := service.UpdateDepartment(id, form)
 	if err != nil {
 		common.BusinessFail(c, err.Error())
 		return
 	}
-	common.Success(c, number)
+	common.Success(c, success)
 }
 
 // 删除部门
