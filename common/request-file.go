@@ -1,7 +1,8 @@
 package common
 
-type FileCreateDto struct {
-	Name           string `form:"name" json:"name"`
-	Url            string `form:"url" json:"url"`
-	ConstructionID int    `form:"construct_id" json:"construct_id"`
+type FileDto struct {
+	ID   int    `form:"id" json:"id"`
+	Name string `form:"name" json:"name"`
+	Url  string `form:"url" json:"url"`
+	Type string `form:"type" json:"type"`
 }

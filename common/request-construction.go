@@ -82,3 +82,87 @@ type ConstructionUpdateDto struct {
 	// 是否提交
 	IsSubmit bool `form:"is_submit" json:"is_submit,omitempty"`
 }
+
+// 施工作业提交dto
+type ConstructionSubmitDto struct {
+	Files []FileDto `form:"files" json:"files" binding:"required"`
+	// 是否确认宣读
+	IsNotice bool `form:"is_notice" json:"is_notice" binding:"required"`
+	// 宣读时间
+	NoticeTime string `form:"notice_time" json:"notice_time" binding:"required"`
+	// 停留时长(单位秒)
+	StayTime int `form:"stay_time" json:"stay_time" binding:"required"`
+	// 工具数量
+	ToolNum int `form:"tool_num" json:"tool_num" binding:"required"`
+	// 人员数量
+	UserNum int `form:"user_num" json:"user_num" binding:"required"`
+	// 打卡时间
+	ClockTime string `form:"clock_time" json:"clock_time"`
+	// 打卡人员id
+	ClockUserID int `form:"clock_user_id" json:"clock_user_id"`
+	// 打卡地点
+	ClockLocation string `form:"clock_location" json:"clock_location"`
+	// 工具和人员清点备注
+	ToolRemark string `form:"tool_remark" json:"tool_remark,omitempty"`
+	// 红闪灯备注
+	LightRemark string `form:"light_remark" json:"light_remark,omitempty"`
+	// 红闪灯类型
+	LightType string `form:"light_type" json:"light_type"`
+	// 安全防护员备注
+	GuardRemark string `form:"guard_remark" json:"guard_remark,omitempty"`
+	// 安全防护员类型
+	GuardType string `form:"guard_type" json:"guard_type"`
+	// 作业过程备注
+	ProcessRemark string `form:"process_remark" json:"process_remark,omitempty"`
+	// 出清工具数量
+	QuitToolNum int `form:"quit_tool_num" json:"quit_tool_num"`
+	// 出清人员数量
+	QuitUserNum int `form:"quit_user_num" json:"quit_user_num"`
+	// 出清工具备注
+	QuitToolRemark string `form:"quit_tool_remark" json:"quit_tool_remark,omitempty"`
+	// 出清人员备注
+	QuitUserRemark string `form:"quit_user_remark" json:"quit_user_remark,omitempty"`
+	// 出清打卡时间
+	QuitClockTime string `form:"quit_clock_time" json:"quit_clock_time"`
+	// 出清打卡地点
+	QuitClockLocation string `form:"quit_clock_location" json:"quit_clock_location"`
+	// 出清打卡人员id
+	QuitClockUserID int `form:"quit_clock_user_id" json:"quit_clock_user_id"`
+	// 交接内容
+	Handover string `form:"handover" json:"handover,omitempty"`
+	// 交接时间
+	HandoverTime string `form:"handover_time" json:"handover_time"`
+	// 交接类型
+	HandoverType string `form:"handover_type" json:"handover_type"`
+	// 作业登记类型
+	WorkedType string `form:"worker_type" json:"worker_type"`
+	// 作业登记备注
+	WorkedRemark string `form:"worker_remark" json:"worker_remark,omitempty"`
+	// 施工注销类型
+	LogoutType string `form:"logout_type" json:"logout_type"`
+	// 施工注销备注
+	LogoutRemark string `form:"logout_remark" json:"logout_remark,omitempty"`
+}
+
+// 审批施工作业dto
+type ConstructionApproveDto struct {
+	ApproveStatus string `form:"approve_status" json:"approve_status"`
+	ApproveRemark string `form:"approve_remark" json:"approve_remark,omitempty"`
+}
+
+// 终止施工作业dto
+type ConstructionStopDto struct {
+	StopReason string `form:"stop_reason" json:"stop_reason"`
+}
+
+// 提交复盘内容dto
+type ConstructionSubmitReplayDto struct {
+	ReplayContext string    `form:"replay_context" json:"replay_context"`
+	Files         []FileDto `form:"files" json:"files"`
+}
+
+// 提交录音dto
+type ConstructionSubmitSoundDto struct {
+	Files       []FileDto `form:"files" json:"files"`
+	SoundRemark string    `form:"sound_remark" json:"sound_remark"`
+}

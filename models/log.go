@@ -8,9 +8,10 @@ import (
 type Log struct {
 	Model
 
-	Content string `json:"content" gorm:"not null;comment:日志内容"`
-	User    User   `json:"user"`
-	UserID  int    `json:"user_id" gorm:"comment:用户id;==default:'galeone'=="`
+	Content        string `json:"content" gorm:"not null;comment:日志内容"`
+	User           User   `json:"user"`
+	UserID         int    `json:"user_id" gorm:"comment:用户id;==default:'galeone'=="`
+	ConstructionID int    `json:"Construction_id" gorm:"comment:施工作业id"`
 }
 
 // 获取日志列表

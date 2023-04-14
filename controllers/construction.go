@@ -54,8 +54,8 @@ func AddConstructionPlan(c *gin.Context) {
 		common.ValidateFail(c, common.GetErrorMsg(form, err))
 		return
 	}
-
-	id, err := service.AddConstructionPlan(form)
+	currentUser, _ := service.GetUserInfoByRequest(c)
+	id, err := service.AddConstructionPlan(form, currentUser)
 	if err != nil {
 		common.BusinessFail(c, err.Error())
 		return
@@ -100,4 +100,173 @@ func DeleteConstructions(c *gin.Context) {
 		return
 	}
 	common.Success(c, number)
+}
+
+// 根据id获取指定施工作业
+func GetConstruction(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	construction, err := service.GetConstruction(id)
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	common.Success(c, construction)
+}
+
+// 更新指定施工作业
+func UpdateConstruction(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+
+	var form common.ConstructionUpdateDto
+	if err := c.ShouldBindJSON(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
+	currentUser, _ := service.GetUserInfoByRequest(c)
+	success, err := service.UpdateConstruction(id, form, currentUser)
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	common.Success(c, success)
+}
+
+// 审批指定施工作业
+func ApproveConstruction(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+
+	var form common.ConstructionApproveDto
+	if err := c.ShouldBindJSON(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
+	currentUser, _ := service.GetUserInfoByRequest(c)
+	success, err := service.ApproveConstruction(id, form, currentUser)
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	common.Success(c, success)
+}
+
+// 领取施工作业
+func ReceiveConstruction(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+
+	var form common.ConstructionApproveDto
+	if err := c.ShouldBindJSON(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
+	currentUser, _ := service.GetUserInfoByRequest(c)
+	success, err := service.ReceiveConstruction(id, currentUser)
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	common.Success(c, success)
+}
+
+// 终止施工作业
+func StopConstruction(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	var form common.ConstructionStopDto
+	if err := c.ShouldBindJSON(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
+	currentUser, _ := service.GetUserInfoByRequest(c)
+	success, err := service.StopConstruction(id, form, currentUser)
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	common.Success(c, success)
+}
+
+// 提交施工作业
+func SubmitConstruction(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	var form common.ConstructionSubmitDto
+	if err := c.ShouldBindJSON(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
+	success, err := service.SubmitConstruction(id, form)
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	common.Success(c, success)
+}
+
+// 提交施工作业复盘
+func SubmitConstructionReplay(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	var form common.ConstructionSubmitReplayDto
+	if err := c.ShouldBindJSON(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
+	success, err := service.SubmitConstructionReplay(id, form)
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	common.Success(c, success)
+}
+
+// 提交施工作业录音文件
+func SubmitConstructionSound(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	var form common.ConstructionSubmitSoundDto
+	if err := c.ShouldBindJSON(&form); err != nil {
+		common.ValidateFail(c, common.GetErrorMsg(form, err))
+		return
+	}
+
+	success, err := service.SubmitConstructionSound(id, form)
+	if err != nil {
+		common.BusinessFail(c, err.Error())
+		return
+	}
+	common.Success(c, success)
 }

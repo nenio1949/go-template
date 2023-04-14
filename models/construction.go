@@ -47,18 +47,19 @@ type Construction struct {
 	StayTime   int              `json:"stay_time" gorm:"comment:停留时间(单位秒)"`
 
 	// 工具人员清点
-	ToolNum     int              `json:"tool_num" gorm:"comment:工具数量"`
-	UserNum     int              `json:"user_num" gorm:"comment:人员数量"`
-	ClockTime   common.LocalTime `json:"clock_time" gorm:"comment:打卡时间"`
-	ClockUserID int              `json:"clock_user_id" gorm:"comment:打卡人id"`
-	ToolRemark  string           `json:"tool_remark" gorm:"type:text;comment:工具清点备注"`
+	ToolNum       int              `json:"tool_num" gorm:"comment:工具数量"`
+	UserNum       int              `json:"user_num" gorm:"comment:人员数量"`
+	ClockTime     common.LocalTime `json:"clock_time" gorm:"comment:打卡时间"`
+	ClockUserID   int              `json:"clock_user_id" gorm:"comment:打卡人id"`
+	ClockLocation string           `json:"clock_location" gorm:"comment:打卡地点"`
+	ToolRemark    string           `json:"tool_remark" gorm:"type:text;comment:工具清点备注"`
 
 	// 作业边界
-	LightRemark   string `json:"light_remark" gorm:"type:text;comment:红闪灯备注"`
-	LightType     string `json:"light_type" gorm:"comment:红闪灯类型"`
-	GuardRemark   string `json:"guard_remark" gorm:"type:text;comment:防护员备注"`
-	GuardType     string `json:"guard_type" gorm:"comment:防护员类型"`
-	NeedJob       bool   `json:"need_job" gorm:"comment:是否作业边界"`
+	LightRemark string `json:"light_remark" gorm:"type:text;comment:红闪灯备注"`
+	LightType   string `json:"light_type" gorm:"comment:红闪灯类型"`
+	GuardRemark string `json:"guard_remark" gorm:"type:text;comment:防护员备注"`
+	GuardType   string `json:"guard_type" gorm:"comment:防护员类型"`
+	// NeedJob       bool   `json:"need_job" gorm:"comment:是否作业边界"`
 	ProcessRemark string `json:"process_remark" gorm:"type:text;comment:作业过程备注"`
 
 	// 作业出清
@@ -71,7 +72,7 @@ type Construction struct {
 	QuitClockUserID   int              `json:"quit_clock_user_id" gorm:"comment:出清打卡人id"`
 
 	// 作业交接
-	HaveHandover bool             `json:"have_handover" gorm:"comment:是否交接"`
+	// HaveHandover bool             `json:"have_handover" gorm:"comment:是否交接"`
 	Handover     string           `json:"handover" gorm:"type:text;comment:交接内容"`
 	HandoverTime common.LocalTime `json:"handover_time" gorm:"comment:交接时间"`
 	HandoverType string           `json:"handover_type" gorm:"comment:交接类型"`
@@ -83,11 +84,15 @@ type Construction struct {
 	MobileReceived bool             `json:"mobile_received" gorm:"comment:手机是否已领取"`
 	WorkedType     string           `json:"worker_type" gorm:"comment:作业登记类型"`
 	WorkedRemark   string           `json:"worker_remark" gorm:"type:text;comment:作业登记备注"`
-	LogoutJob      bool             `json:"logout_job" gorm:"comment:是否注销作业令"`
-	LogoutType     string           `json:"logout_type" gorm:"comment:注销类型"`
-	LogoutRemark   string           `json:"logout_remark" gorm:"type:text;comment:作业注销备注"`
+	// LogoutJob      bool             `json:"logout_job" gorm:"comment:是否注销作业令"`
+	LogoutType    string `json:"logout_type" gorm:"comment:注销类型"`
+	LogoutRemark  string `json:"logout_remark" gorm:"type:text;comment:作业注销备注"`
+	ApproveStatus string `json:"approve_status" gorm:"comment:审批状态(pass表示通过,refuse表示驳回)"`
+	ApproveRemark string `json:"approve_remark" gorm:"type:text;comment:审批备注"`
 
 	AuditStatus string `json:"audit_status" gorm:"comment:审计状态"`
+	Logs        []Log  `json:"logs" gorm:"foreignKey:ConstructionID"`
+	Files       []File `json:"files" gorm:"foreignKey:ConstructionID"`
 }
 
 // 获取施工作业列表
@@ -123,40 +128,40 @@ func GetConstructionPlans(params common.PageSearchConstructionDto) ([]*common.Co
 
 	if len(constructions) > 0 {
 
-		for a := 0; a < len(constructions); a++ {
+		for _, a := range constructions {
 			var measureLibraries []common.MeasureLibraryDto
 			var executiveUsers []map[string]interface{}
 
-			for b := 0; b < len(constructions[a].MeasureLibraries); b++ {
+			for _, b := range a.MeasureLibraries {
 				measureLibraries = append(measureLibraries, common.MeasureLibraryDto{
-					ID:       constructions[a].MeasureLibraries[b].ID,
-					HomeWork: constructions[a].MeasureLibraries[b].HomeWork,
-					RiskType: constructions[a].MeasureLibraries[b].RiskType,
-					Name:     constructions[a].MeasureLibraries[b].Name,
-					Risk:     constructions[a].MeasureLibraries[b].Risk,
-					Measures: constructions[a].MeasureLibraries[b].Measures,
+					ID:       b.ID,
+					HomeWork: b.HomeWork,
+					RiskType: b.RiskType,
+					Name:     b.Name,
+					Risk:     b.Risk,
+					Measures: b.Measures,
 				})
-
 			}
-			for c := 0; c < len(constructions[a].ExecutiveUsers); c++ {
+
+			for _, c := range a.ExecutiveUsers {
 				executiveUsers = append(executiveUsers, map[string]interface{}{
-					"id":   constructions[a].ExecutiveUsers[c].ID,
-					"name": constructions[a].ExecutiveUsers[c].Name,
+					"id":   c.ID,
+					"name": c.Name,
 				})
 			}
 
-			leader, _ := GetUser(constructions[a].LeaderID)
-			status, _ := GetConstructionStatus("status", constructions[a].Status)
+			leader, _ := GetUser(a.LeaderID)
+			status, _ := GetConstructionStatus("status", a.Status)
 			constructionPlans = append(constructionPlans, &common.ConstructionPlanDto{
-				ID:               constructions[a].ID,
+				ID:               a.ID,
 				MeasureLibraries: measureLibraries,
-				StartTtime:       constructions[a].StartTime,
-				EndTime:          constructions[a].EndTime,
-				Location:         constructions[a].Location,
-				Remark:           constructions[a].Remark,
+				StartTtime:       a.StartTime,
+				EndTime:          a.EndTime,
+				Location:         a.Location,
+				Remark:           a.Remark,
 				Status:           status,
-				EquipmentType:    constructions[a].EquipmentType,
-				Leader:           map[string]interface{}{"id": constructions[a].LeaderID, "name": leader.Name},
+				EquipmentType:    a.EquipmentType,
+				Leader:           map[string]interface{}{"id": a.LeaderID, "name": leader.Name},
 				ExecutiveUsers:   executiveUsers,
 			})
 		}
@@ -176,22 +181,22 @@ func GetConstructionPlan(id int) (*common.ConstructionPlanDto, error) {
 		return nil, err
 	}
 
-	for b := 0; b < len(construction.MeasureLibraries); b++ {
+	for _, b := range construction.MeasureLibraries {
 		measureLibraries = append(measureLibraries, common.MeasureLibraryDto{
-			ID:       construction.MeasureLibraries[b].ID,
-			HomeWork: construction.MeasureLibraries[b].HomeWork,
-			RiskType: construction.MeasureLibraries[b].RiskType,
-			Name:     construction.MeasureLibraries[b].Name,
-			Risk:     construction.MeasureLibraries[b].Risk,
-			Measures: construction.MeasureLibraries[b].Measures,
+			ID:       b.ID,
+			HomeWork: b.HomeWork,
+			RiskType: b.RiskType,
+			Name:     b.Name,
+			Risk:     b.Risk,
+			Measures: b.Measures,
 		})
 
 	}
 
-	for c := 0; c < len(construction.ExecutiveUsers); c++ {
+	for _, c := range construction.ExecutiveUsers {
 		executiveUsers = append(executiveUsers, map[string]interface{}{
-			"id":   construction.ExecutiveUsers[c].ID,
-			"name": construction.ExecutiveUsers[c].Name,
+			"id":   c.ID,
+			"name": c.Name,
 		})
 	}
 	leader, _ := GetUser(construction.LeaderID)
@@ -251,12 +256,15 @@ func GetConstructionStatus(statusType string, status string) (map[string]interfa
 }
 
 // 新增施工作业计划
-func AddConstructionPlan(params common.ConstructionPlanCreateDto) (int, error) {
+func AddConstructionPlan(params common.ConstructionPlanCreateDto, currentUser User) (int, error) {
 
 	startTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.StartTtime, time.Local)
 	endTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.EndTime, time.Local)
 	measureLibraries, _ := GetMeasureLibrariesByIds(params.MeasureLibraryIds)
 	executiveUsers, _ := GetUsersByIds(params.ExecutiveUserIds)
+
+	var logs []Log
+	logs = append(logs, Log{Content: "创建施工作业计划", UserID: currentUser.ID})
 
 	construction := Construction{
 		StartTime:        common.LocalTime{Time: startTime},
@@ -267,6 +275,7 @@ func AddConstructionPlan(params common.ConstructionPlanCreateDto) (int, error) {
 		EquipmentType:    params.EquipmentType,
 		Location:         params.Location,
 		Remark:           params.Remark,
+		Logs:             logs,
 	}
 
 	if err := db.Create(&construction).Error; err != nil {
@@ -350,7 +359,7 @@ func GetConstruction(id int) (*Construction, error) {
 }
 
 // 更新施工作业
-func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, error) {
+func UpdateConstruction(id int, params common.ConstructionUpdateDto, currentUser User) (bool, error) {
 	var oldConstruction *Construction
 	var temporaryUsers []TemporaryUser
 	var err error
@@ -363,13 +372,13 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 	endTime, _ := time.ParseInLocation("20060102150405", params.EndTime, time.Local)
 	executiveUsers, _ := GetUsersByIds(params.ExecutiveUserIds)
 
-	for a := 0; a < len(params.TemporaryUsers); a++ {
+	for _, a := range params.TemporaryUsers {
 		temporaryUsers = append(temporaryUsers, TemporaryUser{
-			Model:         Model{ID: params.TemporaryUsers[a].ID},
-			Name:          params.TemporaryUsers[a].Name,
-			Mobile:        params.TemporaryUsers[a].Mobile,
-			Department:    params.TemporaryUsers[a].Department,
-			DockingUserID: params.TemporaryUsers[a].DockingUserID,
+			Model:         Model{ID: a.ID},
+			Name:          a.Name,
+			Mobile:        a.Mobile,
+			Department:    a.Department,
+			DockingUserID: a.DockingUserID,
 		})
 	}
 
@@ -390,6 +399,7 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 	oldConstruction.TemporaryUsers = temporaryUsers
 	if params.IsSubmit {
 		oldConstruction.JobStatus = "3"
+		oldConstruction.Logs = append(oldConstruction.Logs, Log{Content: "提交作业", UserID: currentUser.ID, ConstructionID: oldConstruction.ID})
 	}
 
 	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
@@ -400,12 +410,19 @@ func UpdateConstruction(id int, params common.ConstructionUpdateDto) (bool, erro
 }
 
 // 审批指定施工作业
-func ApproveConstruction(id int) (bool, error) {
+func ApproveConstruction(id int, params common.ConstructionApproveDto, currentUser User) (bool, error) {
 	var oldConstruction *Construction
 	var err error
 
 	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
 		return false, err
+	}
+	if params.ApproveStatus != "pass" && params.ApproveStatus != "refuse" {
+		return false, errors.New("参数错误！")
+	}
+
+	if params.ApproveStatus == "refuse" && len(params.ApproveRemark) == 0 {
+		return false, errors.New("未填写驳回备注！")
 	}
 
 	var ExecutiveUserNoQualificationCount int
@@ -421,7 +438,9 @@ func ApproveConstruction(id int) (bool, error) {
 		// 更新状态为待执行
 		oldConstruction.JobStatus = "2"
 	}
-
+	oldConstruction.ApproveStatus = params.ApproveStatus
+	oldConstruction.ApproveRemark = params.ApproveRemark
+	oldConstruction.Logs = append(oldConstruction.Logs, Log{Content: "审核作业", UserID: currentUser.ID, ConstructionID: oldConstruction.ID})
 	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
 		return false, r.Error
 	}
@@ -430,7 +449,7 @@ func ApproveConstruction(id int) (bool, error) {
 }
 
 // 领取施工作业
-func ReceiveConstruction(id int) (bool, error) {
+func ReceiveConstruction(id int, currentUser User) (bool, error) {
 	var oldConstruction *Construction
 	var err error
 
@@ -439,6 +458,7 @@ func ReceiveConstruction(id int) (bool, error) {
 	}
 	// 更新状态为执行中
 	oldConstruction.JobStatus = "4"
+	oldConstruction.Logs = append(oldConstruction.Logs, Log{Content: "领取任务", UserID: currentUser.ID, ConstructionID: oldConstruction.ID})
 	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
 		return false, r.Error
 	}
@@ -447,7 +467,7 @@ func ReceiveConstruction(id int) (bool, error) {
 }
 
 // 终止施工作业
-func StopConstruction(id int) (bool, error) {
+func StopConstruction(id int, params common.ConstructionStopDto, currentUser User) (bool, error) {
 	var oldConstruction *Construction
 	var err error
 
@@ -456,6 +476,8 @@ func StopConstruction(id int) (bool, error) {
 	}
 	// 更新状态为已终止
 	oldConstruction.JobStatus = "8"
+	oldConstruction.StopReason = params.StopReason
+	oldConstruction.Logs = append(oldConstruction.Logs, Log{Content: "终止任务", UserID: currentUser.ID, ConstructionID: oldConstruction.ID})
 	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
 		return false, r.Error
 	}
@@ -480,6 +502,131 @@ func GetConstructionCount() (int64, error) {
 		return 0, err
 	}
 	return total, nil
+}
+
+// 提交施工作业
+func SubmitConstruction(id int, params common.ConstructionSubmitDto) (bool, error) {
+	var oldConstruction *Construction
+	var err error
+
+	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
+		return false, err
+	}
+
+	if oldConstruction.Status == "7" || oldConstruction.Status == "8" {
+		return false, errors.New("任务已完结，不允许再提交！")
+	}
+
+	var files []File = oldConstruction.Files
+	for _, f := range params.Files {
+		if f.ID == 0 {
+			files = append(files, File{Name: f.Name, Type: f.Type, Url: f.Url, ConstructionID: oldConstruction.ID})
+		}
+	}
+
+	noticeTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.NoticeTime, time.Local)
+	clockTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.ClockTime, time.Local)
+	quitClockTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.QuitClockTime, time.Local)
+	handoverTime, _ := time.ParseInLocation("2006-01-02 15:04:05", params.HandoverTime, time.Local)
+
+	oldConstruction.Files = files
+	oldConstruction.IsNotice = params.IsNotice
+	oldConstruction.NoticeTime = common.LocalTime{Time: noticeTime}
+	oldConstruction.StayTime = params.StayTime
+	oldConstruction.ToolNum = params.ToolNum
+	oldConstruction.UserNum = params.UserNum
+	oldConstruction.ClockTime = common.LocalTime{Time: clockTime}
+	oldConstruction.ClockUserID = params.ClockUserID
+	oldConstruction.ClockLocation = params.ClockLocation
+	oldConstruction.ToolRemark = params.ToolRemark
+	oldConstruction.LightRemark = params.LightRemark
+	oldConstruction.LightType = params.LightType
+	oldConstruction.GuardRemark = params.GuardRemark
+	oldConstruction.GuardType = params.GuardType
+	oldConstruction.ProcessRemark = params.ProcessRemark
+	oldConstruction.QuitToolNum = params.QuitToolNum
+	oldConstruction.QuitUserNum = params.QuitUserNum
+	oldConstruction.QuitToolRemark = params.QuitToolRemark
+	oldConstruction.QuitUserRemark = params.QuitUserRemark
+	oldConstruction.QuitClockTime = common.LocalTime{Time: quitClockTime}
+	oldConstruction.QuitClockLocation = params.QuitClockLocation
+	oldConstruction.QuitClockUserID = params.QuitClockUserID
+	oldConstruction.Handover = params.Handover
+	oldConstruction.HandoverTime = common.LocalTime{Time: handoverTime}
+	oldConstruction.HandoverType = params.HandoverType
+	oldConstruction.WorkedType = params.WorkedType
+	oldConstruction.WorkedRemark = params.WorkedRemark
+	oldConstruction.LogoutType = params.LogoutType
+	oldConstruction.LogoutRemark = params.LogoutRemark
+	// 状态更改为复盘待上传
+	oldConstruction.Status = "5"
+
+	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
+		return false, r.Error
+	}
+
+	return true, nil
+}
+
+// 提交复盘
+func SubmitConstructionReplay(id int, params common.ConstructionSubmitReplayDto) (bool, error) {
+	var oldConstruction *Construction
+	var err error
+
+	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
+		return false, err
+	}
+
+	if oldConstruction.Status == "7" || oldConstruction.Status == "8" {
+		return false, errors.New("任务已完结，不允许再提交！")
+	}
+	var newFiles []File = oldConstruction.Files
+	for _, f := range params.Files {
+		if f.ID == 0 {
+			newFiles = append(newFiles, File{Name: f.Name, Type: "replay", Url: f.Name, ConstructionID: oldConstruction.ID})
+		}
+	}
+	oldConstruction.Files = newFiles
+	oldConstruction.ReplayContext = params.ReplayContext
+	oldConstruction.ReplayTime = common.LocalTime{Time: time.Now()}
+	// 状态更改为录音待上传
+	oldConstruction.Status = "6"
+
+	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
+		return false, r.Error
+	}
+
+	return true, nil
+}
+
+// 提交录音文件
+func SubmitConstructionSound(id int, params common.ConstructionSubmitSoundDto) (bool, error) {
+	var oldConstruction *Construction
+	var err error
+
+	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
+		return false, err
+	}
+
+	if oldConstruction.Status == "7" || oldConstruction.Status == "8" {
+		return false, errors.New("任务已完结，不允许再提交！")
+	}
+	var newFiles []File = oldConstruction.Files
+	for _, f := range params.Files {
+		if f.ID == 0 {
+			newFiles = append(newFiles, File{Name: f.Name, Type: f.Type, Url: f.Name, ConstructionID: oldConstruction.ID})
+		}
+	}
+	oldConstruction.Files = newFiles
+	oldConstruction.SoundRemark = params.SoundRemark
+	// 状态更改为已完成
+	oldConstruction.Status = "7"
+
+	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
+		return false, r.Error
+	}
+
+	return true, nil
 }
 
 // 同步施工作业状态(每隔5s执行一次)
