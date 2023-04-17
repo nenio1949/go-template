@@ -171,12 +171,6 @@ func ReceiveConstruction(c *gin.Context) {
 		return
 	}
 
-	var form common.ConstructionApproveDto
-	if err := c.ShouldBindJSON(&form); err != nil {
-		common.ValidateFail(c, common.GetErrorMsg(form, err))
-		return
-	}
-
 	currentUser, _ := service.GetUserInfoByRequest(c)
 	success, err := service.ReceiveConstruction(id, currentUser)
 	if err != nil {

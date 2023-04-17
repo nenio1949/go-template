@@ -417,11 +417,11 @@ func ApproveConstruction(id int, params common.ConstructionApproveDto, currentUs
 	if oldConstruction, err = GetConstruction(id); err != nil || oldConstruction == nil {
 		return false, err
 	}
-	if params.ApproveStatus != "pass" && params.ApproveStatus != "refuse" {
+	if params.Status != "pass" && params.Status != "refuse" {
 		return false, errors.New("参数错误！")
 	}
 
-	if params.ApproveStatus == "refuse" && len(params.ApproveRemark) == 0 {
+	if params.Status == "refuse" && len(params.Remark) == 0 {
 		return false, errors.New("未填写驳回备注！")
 	}
 
@@ -431,15 +431,20 @@ func ApproveConstruction(id int, params common.ConstructionApproveDto, currentUs
 			ExecutiveUserNoQualificationCount += 1
 		}
 	}
-	if ExecutiveUserNoQualificationCount > 0 {
-		// 存在执行人员无资质则需要人员资质审核通过后才能领取执行
-		oldConstruction.JobStatus = "9"
+	if params.Status == "pass" {
+		if ExecutiveUserNoQualificationCount > 0 {
+			// 存在执行人员无资质则需要人员资质审核通过后才能领取执行
+			oldConstruction.JobStatus = "9"
+		} else {
+			// 更新状态为待执行
+			oldConstruction.JobStatus = "2"
+		}
 	} else {
-		// 更新状态为待执行
-		oldConstruction.JobStatus = "2"
+		// 驳回则更新状态为待提交
+		oldConstruction.JobStatus = "1"
 	}
-	oldConstruction.ApproveStatus = params.ApproveStatus
-	oldConstruction.ApproveRemark = params.ApproveRemark
+	oldConstruction.Status = params.Status
+	oldConstruction.Remark = params.Remark
 	oldConstruction.Logs = append(oldConstruction.Logs, Log{Content: "审核作业", UserID: currentUser.ID, ConstructionID: oldConstruction.ID})
 	if r := db.Updates(&oldConstruction); r.RowsAffected != 1 {
 		return false, r.Error

@@ -146,8 +146,8 @@ type ConstructionSubmitDto struct {
 
 // 审批施工作业dto
 type ConstructionApproveDto struct {
-	ApproveStatus string `form:"approve_status" json:"approve_status"`
-	ApproveRemark string `form:"approve_remark" json:"approve_remark,omitempty"`
+	Status string `form:"status" json:"status"`
+	Remark string `form:"remark" json:"remark,omitempty"`
 }
 
 // 终止施工作业dto
